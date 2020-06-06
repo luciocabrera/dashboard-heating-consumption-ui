@@ -3,7 +3,7 @@ import React from 'react';
 // Components
 import { Form as AntdForm, Input, Select } from 'antd';
 
-const Form = (props) => {
+const FormBase = (props) => {
   const getFormItemChild = (item) => {
     switch (item.type) {
       case 'textArea':
@@ -55,4 +55,4 @@ const Form = (props) => {
   );
 };
 
-export default Form;
+export default FormBase;

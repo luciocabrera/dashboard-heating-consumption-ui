@@ -3,18 +3,15 @@ import { GET_DEVICES, SET_SELECTED_DEVICE } from './actionTypes';
 import * as deviceService from '../services/deviceService';
 
 export const getDevices = () => async (dispatch) => {
-
   const devices = (await deviceService.getDevices()) || [];
 
-  await dispatch(getDevicesSuccess(devices))
-
+  await dispatch(getDevicesSuccess(devices));
 };
 
-export const createDevice= (device) => async (dispatch)=> {
-
- const response = deviceService.createDevice(device);
-
-}
+export const createDevice = (device) => async (dispatch) => {
+  const response = deviceService.createDevice(device);
+  return response;
+};
 
 export const setSelectedDevice = (newSelectedDeviceId) => async (
   dispatch,
