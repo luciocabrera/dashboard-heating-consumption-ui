@@ -3,10 +3,7 @@ import React from 'react';
 // Router
 import { useHistory } from 'react-router-dom';
 // Components
-import { LayoutWrapper, Form } from '../../components';
-import { Popconfirm, Menu,  Form as AntdForm } from 'antd';
-// Icons
-import { SaveOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { FormCreate } from '../../components/index';
 // Services
 import * as deviceService from '../../services/deviceService';
 
@@ -48,51 +45,22 @@ const formItems = [
 
 const DeviceForm = (props) => {
   const history = useHistory();
-  const [form] = AntdForm.useForm();
 
-  const onConfirmSave = () => {
-    form
-      .validateFields()
-      .then(async (values) => {
-        const response = await deviceService.createDevice(values);
-        if (response.status === 201) history.push('/devices');
-      })
-      .catch((errorInfo) => {});
+  const onConfirmSave = async (values) => {
+    const response = await deviceService.createDevice(values);
+    if (response.status === 201) history.push('/devices');
   };
 
   const onConfirmCancel = () => {
     history.push('/devices');
   };
 
-  const DevicesFormMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuLogs" icon={<SaveOutlined />}>
-        <Popconfirm
-          title="do you want to create the current Device ?"
-          onConfirm={onConfirmSave}
-          okText="Yes"
-          cancelText="No"
-        >
-          Accept
-        </Popconfirm>
-      </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<CloseCircleOutlined />}>
-        <Popconfirm
-          title="Are you sure you want to cancel?"
-          onConfirm={onConfirmCancel}
-          okText="Yes"
-          cancelText="No"
-        >
-          Cancel
-        </Popconfirm>
-      </Menu.Item>
-    </Menu>
-  );
-
   return (
-    <LayoutWrapper
-      menu={<DevicesFormMenu />}
-      content={<Form formItems={formItems} form={form} />}
+    <FormCreate
+      formItems={formItems}
+      onConfirmCancel={onConfirmCancel}
+      onConfirmSave={onConfirmSave}
+      entity='Device'
     />
   );
 };

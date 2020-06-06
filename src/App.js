@@ -4,14 +4,11 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import store from './store/store'; //Import the store
 // Router
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Layouts
-import { Home } from './Layouts/index';
-import DevicesListContainer from './Layouts/device/DevicesList';
-import DeviceForm from './Layouts/device/DeviceForm';
+import { Home, DevicesListContainer, DeviceForm } from './Layouts/index';
 // Css
 import 'antd/dist/antd.css';
-
 
 const App = () => (
   <Provider store={store}>
