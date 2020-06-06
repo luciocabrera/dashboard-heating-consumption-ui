@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RouterLink (Snapshot) RouterLink  renders using renderer without crashing 1`] = `
+<a
+  href="/"
+  onClick={[Function]}
+/>
+`;
