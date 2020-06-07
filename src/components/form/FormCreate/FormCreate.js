@@ -8,6 +8,9 @@ import { SaveOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const FormCreate = (props) => {
   const [form] = AntdForm.useForm();
+  React.useEffect(() => {
+    form.setFieldsValue(props.initialValues);
+  }, [form, props.initialValues]);
 
   const onConfirmSave = () => {
     form
@@ -46,11 +49,16 @@ const FormCreate = (props) => {
       </Menu.Item>
     </Menu>
   );
-
+  debugger;
   return (
     <LayoutWrapper
       menu={<FormMenu />}
-      content={<FormBase form={form} formItems={props.formItems} />}
+      content={
+        <FormBase
+          form={form}
+          formItems={props.formItems}
+        />
+      }
     />
   );
 };

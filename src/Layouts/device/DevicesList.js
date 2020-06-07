@@ -33,7 +33,6 @@ const DevicesList = (props) => {
   if (!devices || devices.length === 0) return <div>nothing loaded</div>;
 
   const onConfirmDelete = async (deviceId) => {
-    debugger;
     await deviceService.deleteDevice(deviceId);
     notification.success({
       message: 'Device deleted!!!',
@@ -98,7 +97,12 @@ const DevicesList = (props) => {
             hoverable
             actions={[
               <ReadOutlined key="logs" />,
-              <EditOutlined key="edit" />,
+              <RouterLink
+                key={`router-link-edit-devices-${item.id}`}
+                href={`/devices/${item.id}`}
+              >
+                <EditOutlined key="edit" />
+              </RouterLink>,
               <Popconfirm
                 title={`Are you sure you want to delete the selected Device ?`}
                 onConfirm={() => onConfirmDelete(item.id)}

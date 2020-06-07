@@ -1,10 +1,7 @@
 import { endPoints } from '../constants/endPoints';
 import http from '../lib/http';
 
-export const getDevices = async (
-  fetchType = 'all',
-  fetchParamValue = ''
-) => {
+export const getDevices = async (fetchType = 'all', fetchParamValue = '') => {
   let uriSufix;
   switch (fetchType) {
     case 'byId':
@@ -21,7 +18,7 @@ export const getDevices = async (
       break;
   }
 
-  const uri = `${endPoints.devices.get.devices}/${uriSufix}`;
+  const uri = `${endPoints.devices.get}/${uriSufix}`;
   const response = await http('get', uri, {});
   const devices = response.data;
 
@@ -29,15 +26,22 @@ export const getDevices = async (
 };
 
 export const createDevice = async (device) => {
-  const uri = `${endPoints.devices.post.devices}`;
+  const uri = `${endPoints.devices.post}`;
 
   const response = await http('post', uri, device);
 
   return response;
 };
 
+export const updateDevice = async (device) => {
+  const uri = `${endPoints.devices.put}/${device.id}`;
+
+  const response = await http('put', uri, device);
+
+  return response;
+};
 export const deleteDevice = async (deviceId) => {
-  const uri = `${endPoints.devices.delete.devices}/${deviceId}`;
+  const uri = `${endPoints.devices.delete}/${deviceId}`;
 
   const response = await http('delete', uri, deviceId);
 

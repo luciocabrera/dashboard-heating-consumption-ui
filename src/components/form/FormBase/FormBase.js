@@ -4,6 +4,7 @@ import React from 'react';
 import { Form as AntdForm, Input, Select } from 'antd';
 
 const FormBase = (props) => {
+  
   const getFormItemChild = (item) => {
     switch (item.type) {
       case 'textArea':
