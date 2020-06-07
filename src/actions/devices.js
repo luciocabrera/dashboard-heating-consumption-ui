@@ -13,6 +13,11 @@ export const createDevice = (device) => async (dispatch) => {
   return response;
 };
 
+export const deleteDevice = (deviceId) => async (dispatch) => {
+  const response = deviceService.deleteDevice(deviceId);
+  return response;
+};
+
 export const setSelectedDevice = (newSelectedDeviceId) => async (
   dispatch,
   getState
