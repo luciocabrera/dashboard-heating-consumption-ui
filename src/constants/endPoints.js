@@ -9,5 +9,6 @@ export const endPoints = {
       devices: `${apiMetadataUrl}/${devicesPath}`,
     },
     post: { devices: `${apiMetadataUrl}/${devicesPath}` },
+    delete: { devices: `${apiMetadataUrl}/${devicesPath}` }
   },
 };
