@@ -15,7 +15,7 @@ export default async function (
       return post(uri, payload, headers);
     case 'put':
       return put(uri, payload, headers);
-    case 'del':
+    case 'delete':
       return del(uri, payload, headers);
     case 'create':
       return post(uri, payload, headers);

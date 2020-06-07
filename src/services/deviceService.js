@@ -35,3 +35,11 @@ export const createDevice = async (device) => {
 
   return response;
 };
+
+export const deleteDevice = async (deviceId) => {
+  const uri = `${endPoints.devices.delete.devices}/${deviceId}`;
+
+  const response = await http('delete', uri, deviceId);
+
+  return response;
+};
