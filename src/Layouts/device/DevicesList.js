@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
-import { List, Avatar, Card, Menu } from 'antd';
+import { List, Avatar, Card, Menu, notification, Popconfirm } from 'antd';
 // Icons
 import {
   EditOutlined,
@@ -32,6 +32,17 @@ const DevicesList = (props) => {
 
   if (!devices || devices.length === 0) return <div>nothing loaded</div>;
 
+  const onConfirmDelete = async (deviceId) => {
+    debugger;
+    await deviceService.deleteDevice(deviceId);
+    notification.success({
+      message: 'Device deleted!!!',
+      description: 'The Device has been successfully deleted.',
+    });
+    const devices = await deviceService.getDevices();
+    setDevices(devices);
+  };
+
   const listData = [];
 
   devices.forEach((device, i) => {
@@ -39,6 +50,7 @@ const DevicesList = (props) => {
       type: 'card',
       href: 'https://ant.design',
       title: device.code,
+      id: device.id,
       avatar: device_list_avatar,
       description: device.name,
       content: device.description,
@@ -87,7 +99,14 @@ const DevicesList = (props) => {
             actions={[
               <ReadOutlined key="logs" />,
               <EditOutlined key="edit" />,
-              <DeleteOutlined key="delete" />,
+              <Popconfirm
+                title={`Are you sure you want to delete the selected Device ?`}
+                onConfirm={() => onConfirmDelete(item.id)}
+                okText="Yes"
+                cancelText="No"
+              >
+                <DeleteOutlined key="delete" />
+              </Popconfirm>,
             ]}
           >
             <Card.Meta
