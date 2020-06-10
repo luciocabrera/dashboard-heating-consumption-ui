@@ -25,7 +25,20 @@ const App = () => (
           exact
           path={[`/devices/create`]}
           // eslint-disable-next-line no-restricted-globals
-          render={() => <DeviceForm />}
+          render={() => <DeviceForm mode="new" />}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId`]}
+          // eslint-disable-next-line no-restricted-globals
+          render={() => (
+            <DeviceForm
+              mode="edit"
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 9)}
+            />
+          )}
         />
       </Switch>
     </BrowserRouter>

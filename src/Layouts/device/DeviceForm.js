@@ -1,9 +1,10 @@
 // React
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 // Router
 import { useHistory } from 'react-router-dom';
 // Components
 import { FormCreate } from '../../components/index';
+import { notification } from 'antd';
 // Services
 import * as deviceService from '../../services/deviceService';
 
@@ -45,22 +46,57 @@ const formItems = [
 
 const DeviceForm = (props) => {
   const history = useHistory();
+  const [device, setDevice] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const device = await deviceService.getDevices('byId', props.deviceId);
+      setDevice(device);
+    };
+
+    if (props.mode === 'edit') fetchData();
+  }, [props.deviceId, props.mode]);
 
   const onConfirmSave = async (values) => {
+    if (props.mode === 'new') await onCreate(values);
+    if (props.mode === 'edit') await onUpdate(values);
+  };
+
+  const onCreate = async (values) => {
     const response = await deviceService.createDevice(values);
-    if (response.status === 201) history.push('/devices');
+    if (response.status === 201) {
+      notification.success({
+        message: 'Device created!!!',
+        description: 'The Device has been successfully created.',
+      });
+      history.push('/devices');
+    }
+  };
+
+  const onUpdate = async (values) => {
+    values.id = props.deviceId;
+    const response = await deviceService.updateDevice(values);
+    if (response.status === 200) {
+      notification.success({
+        message: 'Device modified!!!',
+        description: 'The Device has been successfully modified.',
+      });
+      history.push('/devices');
+    }
   };
 
   const onConfirmCancel = () => {
     history.push('/devices');
   };
+  debugger;
 
   return (
     <FormCreate
       formItems={formItems}
       onConfirmCancel={onConfirmCancel}
       onConfirmSave={onConfirmSave}
-      entity='Device'
+      entity="Device"
+      initialValues={device}
     />
   );
 };
