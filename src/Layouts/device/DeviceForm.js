@@ -88,7 +88,6 @@ const DeviceForm = (props) => {
   const onConfirmCancel = () => {
     history.push('/devices');
   };
-  debugger;
 
   return (
     <FormCreate

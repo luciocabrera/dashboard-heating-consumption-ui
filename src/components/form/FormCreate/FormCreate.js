@@ -49,7 +49,7 @@ const FormCreate = (props) => {
       </Menu.Item>
     </Menu>
   );
-  debugger;
+
   return (
     <LayoutWrapper
       menu={<FormMenu />}
