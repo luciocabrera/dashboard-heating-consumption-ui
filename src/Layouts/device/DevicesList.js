@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
-import { List, Avatar, Card, Menu, notification, Popconfirm } from 'antd';
+import { List, Avatar, Card, Menu, notification, Popconfirm, Row, Col } from 'antd';
 // Icons
 import {
   EditOutlined,
@@ -17,6 +17,7 @@ import {
 import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as deviceService from '../../services/deviceService';
+import Text from 'antd/lib/typography/Text';
 
 const DevicesList = (props) => {
   const [devices, setDevices] = useState();
@@ -48,11 +49,11 @@ const DevicesList = (props) => {
     listData.push({
       type: 'card',
       href: 'https://ant.design',
-      title: device.code,
+      code: device.code,
       id: device.id,
       avatar: device_list_avatar,
-      description: device.name,
-      content: device.description,
+      name: device.name,
+      description: device.description,
     });
   });
 
@@ -115,8 +116,16 @@ const DevicesList = (props) => {
           >
             <Card.Meta
               avatar={<Avatar src={device_list_avatar} />}
-              title={item.title}
-              description={item.content}
+              title={<div>
+                <Row >
+                  <div style={{ color: 'darkorange' }}>{item.code}</div>
+                </Row>
+                <Row >
+                  <div style={{ color: 'darkblue' }}>{item.name}</div>
+                </Row>
+              </div>
+              }
+              description={item.description}
             />
           </Card>
         </List.Item>
