@@ -1,54 +1,88 @@
 
 import React from 'react';
 import { useTable, usePagination } from 'react-table'
+import styled from 'styled-components'
 
+const Styles = styled.div`
+  padding: 1rem;
+
+  table {
+    border-spacing: 0;
+    border: 1px solid black;
+
+    tr {
+      :last-child {
+        td {
+          border-bottom: 0;
+        }
+      }
+    }
+
+    th,
+    td {
+      margin: 0;
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+
+      :last-child {
+        border-right: 0;
+      }
+    }
+  }
+
+  .pagination {
+    padding: 0.5rem;
+  }
+`
 // Let's add a fetchData method to our Table component that will be used to fetch
 // new data when pagination state changes
 // We can also add a loading state to let our table know it's loading new data
-const  Table = ({
-    columns,
-    data,
-    fetchData,
-    loading,
-    pageCount: controlledPageCount,
-  }) => {
-    const {
-      getTableProps,
-      getTableBodyProps,
-      headerGroups,
-      prepareRow,
-      page,
-      canPreviousPage,
-      canNextPage,
-      pageOptions,
-      pageCount,
-      gotoPage,
-      nextPage,
-      previousPage,
-      setPageSize,
-      // Get the state from the instance
-      state: { pageIndex, pageSize },
-    } = useTable(
-      {
-        columns,
-        data,
-        initialState: { pageIndex: 0 }, // Pass our hoisted table state
-        manualPagination: true, // Tell the usePagination
-        // hook that we'll handle our own data fetching
-        // This means we'll also have to provide our own
-        // pageCount.
-        pageCount: controlledPageCount,
-      },
-      usePagination
-    )
-  
-    // Listen for changes in pagination and use the state to fetch our new data
-    React.useEffect(() => {
-      fetchData({ pageIndex, pageSize })
-    }, [fetchData, pageIndex, pageSize])
-  
-    // Render the UI for your table
-    return (
+const Table = ({
+  columns,
+  data,
+  fetchData,
+  loading,
+  pageCount: controlledPageCount,
+}) => {
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    prepareRow,
+    page,
+    // below new props related to 'usePagination' hook
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    // Get the state from the instance
+    state: { pageIndex, pageSize },
+  } = useTable(
+    {
+      columns,
+      data,
+      initialState: { pageIndex: 0, pageSize: 10 }, // Pass our hoisted table state
+      manualPagination: false, // Tell the usePagination
+      // hook that we'll handle our own data fetching
+      // This means we'll also have to provide our own
+      // pageCount.
+      pageCount: controlledPageCount,
+    },
+    usePagination
+  )
+
+  // Listen for changes in pagination and use the state to fetch our new data
+  // React.useEffect(() => {
+  //   fetchData({ pageIndex, pageSize })
+  // }, [fetchData, pageIndex, pageSize])
+
+  // Render the UI for your table
+  return (
+    <Styles>
       <>
         <pre>
           <code>
@@ -95,17 +129,17 @@ const  Table = ({
                 </tr>
               )
             })}
-            <tr>
+            {/* <tr>
               {loading ? (
                 // Use our custom loading state to show a loading indicator
                 <td colSpan="10000">Loading...</td>
               ) : (
-                <td colSpan="10000">
-                  Showing {page.length} of ~{controlledPageCount * pageSize}{' '}
+                  <td colSpan="10000">
+                    Showing {page.length} of ~{controlledPageCount * pageSize}{' '}
                   results
-                </td>
-              )}
-            </tr>
+                  </td>
+                )}
+            </tr> */}
           </tbody>
         </table>
         {/* 
@@ -116,10 +150,10 @@ const  Table = ({
           <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
             {'<<'}
           </button>{' '}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage}>
+          <button onClick={previousPage} disabled={!canPreviousPage}>
             {'<'}
           </button>{' '}
-          <button onClick={() => nextPage()} disabled={!canNextPage}>
+          <button onClick={nextPage} disabled={!canNextPage}>
             {'>'}
           </button>{' '}
           <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
@@ -133,7 +167,7 @@ const  Table = ({
           </span>
           <span>
             | Go to page:{' '}
-            <input
+            {/* <input
               type="number"
               defaultValue={pageIndex + 1}
               onChange={e => {
@@ -141,9 +175,9 @@ const  Table = ({
                 gotoPage(page)
               }}
               style={{ width: '100px' }}
-            />
+            /> */}
           </span>{' '}
-          <select
+          {/* <select
             value={pageSize}
             onChange={e => {
               setPageSize(Number(e.target.value))
@@ -154,10 +188,11 @@ const  Table = ({
                 Show {pageSize}
               </option>
             ))}
-          </select>
+          </select> */}
         </div>
       </>
-    )
-  }
+    </Styles>
+  )
+}
 
 export default Table;
