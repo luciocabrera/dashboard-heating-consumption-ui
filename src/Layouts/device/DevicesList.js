@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
-import { List, Avatar, Card, Menu, notification, Popconfirm, Row, Col } from 'antd';
+import { List, Avatar, Card, Menu, notification, Popconfirm, Row } from 'antd';
 // Icons
 import {
   EditOutlined,
@@ -17,7 +17,6 @@ import {
 import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as deviceService from '../../services/deviceService';
-import Text from 'antd/lib/typography/Text';
 
 const DevicesList = (props) => {
   const [devices, setDevices] = useState();
