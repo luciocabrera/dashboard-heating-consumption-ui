@@ -15,17 +15,14 @@ code {
 .ant-layout-content {
   padding: 30px !important;
   margin-top: 15px !important;
+  height:  calc(100vh - 208px) !important;
 }
 
 .ant-layout-footer {
   background: #001529 !important;
   color: white !important;
-  height: 14px !important;
-}
-
-.footer-title {
-  position: relative !important;
-  top: -10px !important;
+  height: 36px !important;
+  line-height: 36px !important;
 }
 
 .ant-card,
@@ -54,4 +51,9 @@ code {
 .ant-layout-content {
   overflow-y: auto !important;
   height: 650px ;
+}
+
+.ant-layout-header {
+  height: 36px !important;
+  line-height: 36px !important;
 }
