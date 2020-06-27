@@ -96,7 +96,12 @@ const DevicesList = (props) => {
           <Card
             hoverable
             actions={[
-              <ReadOutlined key="logs" />,
+              <RouterLink
+                key={`router-link-logs-devices-${item.id}`}
+                href={`/devices/${item.id}/logs`}
+              >
+                <ReadOutlined key="logs" />
+              </RouterLink>,
               <RouterLink
                 key={`router-link-edit-devices-${item.id}`}
                 href={`/devices/${item.id}`}
