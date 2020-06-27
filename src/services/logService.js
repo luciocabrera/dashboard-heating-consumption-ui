@@ -8,7 +8,7 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
       uriSufix = `findById/${fetchParamValue}`;
       break;
     case 'byDeviceId':
-      uriSufix = `findByDeviceId/${fetchParamValue}`;
+      uriSufix = `deviceid/${fetchParamValue}?anchor=2&count=3&sort=date`;
       break;
     default:
       uriSufix = '';

@@ -9,6 +9,8 @@ const FormBase = (props) => {
     switch (item.type) {
       case 'textArea':
         return <Input.TextArea rows={4} />;
+        // case 'datePicker':
+        //   return <
       case 'select':
         return (
           <Select

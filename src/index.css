@@ -19,6 +19,7 @@ code {
 }
 
 .ant-layout-footer {
+  padding: 0 !important;
   background: #001529 !important;
   color: white !important;
   height: 36px !important;
