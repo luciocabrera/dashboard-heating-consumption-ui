@@ -36,11 +36,11 @@ code {
   max-width: 348px !important;
   width: 348px !important;
 }
-.ant-card-body {
-  min-height: 118px !important;
-  max-height: 118px !important;
-}
 
+.ant-card-body {
+  min-height: 134px !important;
+  max-height: 134px !important;
+}
 
 .ant-col {
   margin-right: 20px !important;
