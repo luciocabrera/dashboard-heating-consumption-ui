@@ -2,21 +2,28 @@ import React from 'react'
 import { Chart } from 'react-charts'
 
 
-const data = [
-    {
-        x: '2020-02-10',
-        y: 23
-    },
-];
-
 const LineChart = () => {
 
-    const series = React.useMemo(
-        () => ({
-            showPoints: false
-        }),
+    const data = React.useMemo(
+        () => [
+            {
+                label: 'Series 1',
+                data: [[0, 1], [1, 2], [2, 4], [3, 2], [4, 7]]
+            },
+            {
+                label: 'Series 2',
+                data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
+            }
+        ],
         []
     )
+
+    // const series = React.useMemo(
+    //     () => ({
+    //         showPoints: false
+    //     }),
+    //     []
+    // )
     const axes = React.useMemo(
         () => [
             { primary: true, type: 'time', position: 'bottom' },
@@ -26,7 +33,7 @@ const LineChart = () => {
     )
     return (
 
-        <Chart data={data} series={series} axes={axes} tooltip />
+        <Chart data={data} axes={axes} tooltip />
 
     )
 }

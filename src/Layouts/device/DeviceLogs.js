@@ -43,6 +43,11 @@ const Styles = styled.div`
     width: 25% !important;
     padding: 0 !important;
   }
+
+  .chart-sum {
+    width: 25% !important;
+    heigth: 300px !important;
+  }
 `
 
 const DeviceLogs = (props) => {
@@ -173,7 +178,9 @@ const DeviceLogs = (props) => {
                     </Card>
                 </Col>
             </Row>
-            <Row gutter={16}><LineChart /></Row>
+            <Row gutter={16} className='chart-sum'>
+                <LineChart />
+            </Row>
         </>
     if (!deviceLogs.logs || deviceLogs.logs.length === 0) return <div>nothing loaded</div>;
 
