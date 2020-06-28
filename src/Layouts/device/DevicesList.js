@@ -1,5 +1,6 @@
 // React
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components'
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
 import { List, Avatar, Card, Menu, notification, Popconfirm, Row } from 'antd';
@@ -17,6 +18,34 @@ import {
 import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as deviceService from '../../services/deviceService';
+
+
+const Styles = styled.div`
+.ant-card,
+.ant-card-bordered,
+.ant-card-hoverable,
+.ant-col {
+  min-width: 200px !important;
+  max-width: 348px !important;
+  width: 348px !important;
+}
+
+.ant-card-body {
+  min-height: 134px !important;
+  max-height: 134px !important;
+}
+
+.ant-col {
+  margin-right: 20px !important;
+}
+
+.ant-layout-content {
+  padding: 30px !important;
+  margin-top: 15px !important;
+  height:  calc(100vh - 123px) !important;
+  overflow-x: auto !important;
+}
+`
 
 const DevicesList = (props) => {
   const [devices, setDevices] = useState();
@@ -138,10 +167,12 @@ const DevicesList = (props) => {
   );
 
   return (
-    <LayoutWrapper
-      menu={<DevicesListMenu />}
-      content={<DevicesListContent />}
-    />
+    <Styles>
+      <LayoutWrapper
+        menu={<DevicesListMenu />}
+        content={<DevicesListContent />}
+      />
+    </Styles>
   );
 };
 

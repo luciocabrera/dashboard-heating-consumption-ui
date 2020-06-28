@@ -13,9 +13,8 @@ code {
 }
 
 .ant-layout-content {
-  padding: 30px !important;
-  margin-top: 15px !important;
   height:  calc(100vh - 123px) !important;
+  overflow-x: auto !important;
 }
 
 .ant-layout-footer {
@@ -26,7 +25,7 @@ code {
   line-height: 36px !important;
 }
 
-.ant-card,
+/* .ant-card,
 .ant-card-bordered,
 .ant-card-hoverable,
 .ant-col {
@@ -42,7 +41,7 @@ code {
 
 .ant-col {
   margin-right: 20px !important;
-}
+} */
 
 .header-logo {
   height: 36px;

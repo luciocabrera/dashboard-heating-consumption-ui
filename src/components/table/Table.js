@@ -4,14 +4,10 @@ import { useTable, usePagination } from 'react-table'
 import styled from 'styled-components'
 
 const Styles = styled.div`
-  padding: 1rem;
-
   table {
     border-spacing: 0;
     border: 1px solid black;
     position: relative;
-    top: -61px;
-    left: -31px;
 
     thead {
       tr {
