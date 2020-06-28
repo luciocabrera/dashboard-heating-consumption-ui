@@ -9,8 +9,34 @@ const Styles = styled.div`
   table {
     border-spacing: 0;
     border: 1px solid black;
+    position: relative;
+    top: -61px;
+    left: -31px;
+
+    thead {
+      tr {
+        :nth-child(1)  {
+          background: #001529;
+          color: white;    
+        }
+        :nth-child(2)  {
+          background: #001529;
+          color: white;    
+        }
+      }
+    }
 
     tr {
+      line-height: 11px;
+
+      :nth-child(even) {
+        background: lightgray
+      }
+
+      :nth-child(odd) {
+        background: oldlace
+      }
+
       :last-child {
         td {
           border-bottom: 0;
@@ -32,7 +58,8 @@ const Styles = styled.div`
   }
 
   .pagination {
-    padding: 0.5rem;
+    position: relative;
+    bottom: 40px
   }
 `
 // Let's add a fetchData method to our Table component that will be used to fetch
@@ -44,6 +71,7 @@ const Table = ({
   fetchData,
   loading,
   pageCount: controlledPageCount,
+  pageSize
 }) => {
   const {
     getTableProps,
@@ -60,12 +88,12 @@ const Table = ({
     nextPage,
     previousPage,
     // Get the state from the instance
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable(
     {
       columns,
       data,
-      initialState: { pageIndex: 0, pageSize: 10 }, // Pass our hoisted table state
+      initialState: { pageIndex: 0, pageSize: pageSize }, // Pass our hoisted table state
       manualPagination: false, // Tell the usePagination
       // hook that we'll handle our own data fetching
       // This means we'll also have to provide our own
@@ -84,21 +112,6 @@ const Table = ({
   return (
     <Styles>
       <>
-        <pre>
-          <code>
-            {JSON.stringify(
-              {
-                pageIndex,
-                pageSize,
-                pageCount,
-                canNextPage,
-                canPreviousPage,
-              },
-              null,
-              2
-            )}
-          </code>
-        </pre>
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
@@ -129,17 +142,6 @@ const Table = ({
                 </tr>
               )
             })}
-            {/* <tr>
-              {loading ? (
-                // Use our custom loading state to show a loading indicator
-                <td colSpan="10000">Loading...</td>
-              ) : (
-                  <td colSpan="10000">
-                    Showing {page.length} of ~{controlledPageCount * pageSize}{' '}
-                  results
-                  </td>
-                )}
-            </tr> */}
           </tbody>
         </table>
         {/* 
@@ -154,7 +156,7 @@ const Table = ({
             {'<'}
           </button>{' '}
           <button onClick={nextPage} disabled={!canNextPage}>
-            {'>'}
+            {'next >'}
           </button>{' '}
           <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
             {'>>'}
@@ -167,7 +169,7 @@ const Table = ({
           </span>
           <span>
             | Go to page:{' '}
-            {/* <input
+            <input
               type="number"
               defaultValue={pageIndex + 1}
               onChange={e => {
@@ -175,20 +177,8 @@ const Table = ({
                 gotoPage(page)
               }}
               style={{ width: '100px' }}
-            /> */}
+            />
           </span>{' '}
-          {/* <select
-            value={pageSize}
-            onChange={e => {
-              setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                Show {pageSize}
-              </option>
-            ))}
-          </select> */}
         </div>
       </>
     </Styles>

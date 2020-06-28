@@ -1,24 +1,48 @@
+/* eslint-disable no-unused-vars */
 // React
 import React, { useEffect, useState } from 'react';
+import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
+import styled from 'styled-components'
+import { List, Avatar, Card, Menu, notification, Popconfirm, Row, Col } from 'antd';
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
-import { Menu } from 'antd';
 // Icons
 import {
+    EditOutlined,
+    ReadOutlined,
     ControlOutlined,
     DatabaseOutlined,
     UserOutlined,
     HomeOutlined,
 } from '@ant-design/icons';
+/// Assets
+import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 
 // Services
 import * as logService from '../../services/logService';
 import Table from '../../components/table/Table';
 
+
+const Styles = styled.div`
+
+  .ant-row {
+    flex-flow: nowrap;
+  }
+
+  .ant-col-12 {
+    max-width: 50%;
+    width:50%
+  }
+`
+
 const DeviceLogs = (props) => {
+
+    const size = useWindowSize();
+    const pageSize = (size.height - 218) / 27
+    debugger
     const [deviceLogs, setDeviceLogs] = useState([]);
     // We'll start our table without any data
-  //  const [data, setData] = React.useState([])
+    //  const [data, setData] = React.useState([])
     const [loading, setLoading] = React.useState(false)
     // const [pageCount, setPageCount] = React.useState(0)
     // const fetchIdRef = React.useRef(0)
@@ -28,7 +52,7 @@ const DeviceLogs = (props) => {
         const fetchData = async () => {
             setLoading(true)
             const response = await logService.getLogs('byDeviceId', props.deviceId);
-            setDeviceLogs(response.logs);
+            setDeviceLogs(response);
             setLoading(false)
         };
 
@@ -38,92 +62,71 @@ const DeviceLogs = (props) => {
     const columns = React.useMemo(
         () => [
             {
-                Header: 'Date',
-                accessor: 'date',
-            },
-            {
-                Header: 'Reading A',
-                accessor: 'readingA',
-            },
-            {
-                Header: 'Reading B',
-                accessor: 'readingB',
+                Header: `Device code: ${props.deviceId}`,
+                columns: [
+                    {
+                        Header: 'Date',
+                        accessor: 'date',
+                    },
+                    {
+                        Header: 'Reading A',
+                        accessor: 'readingA',
+                    },
+                    {
+                        Header: 'Reading B',
+                        accessor: 'readingB',
+                    },
+                    {
+                        Header: 'Comment',
+                        accessor: 'comment',
+                    },
+                    {
+                        Header: '',
+                        accessor: '',
+                        Cell: () => <div>test</div>
+                    },
+                ],
             },
         ],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 
-//     const fetchData = ({ pageSize, pageIndex }) => {
-//         // This will get called when the table needs new data
 
-// console.log({ pageSize:pageSize, pageIndex: pageIndex });
-//         // Give this fetch an ID
-//         const fetchId = ++fetchIdRef.current
+    const DeviceDetails = () =>
+        <Card
+            hoverable
+            actions={[
+                <RouterLink
+                    key={`router-link-logs-devices-${deviceLogs.device.id}`}
+                    href={`/devices/${deviceLogs.device.id}/logs`}
+                >
+                    <ReadOutlined key="logs" />
+                </RouterLink>,
+                <RouterLink
+                    key={`router-link-edit-devices-${deviceLogs.device.id}`}
+                    href={`/devices/${deviceLogs.device.id}`}
+                >
+                    <EditOutlined key="edit" />
+                </RouterLink>,
+            ]}
+        >
+            <Card.Meta
+                avatar={<Avatar src={device_list_avatar} />}
+                title={<div>
+                    <Row >
+                        <div style={{ color: 'darkorange' }}>{deviceLogs.device.code}</div>
+                    </Row>
+                    <Row >
+                        <div style={{ color: 'darkblue' }}>{deviceLogs.device.name}</div>
+                    </Row>
+                </div>
+                }
+                description={deviceLogs.device.description}
+            />
+        </Card>
 
-//         // Set the loading state
-//         setLoading(true)
-
-
-//         // Only update the data if this is the latest fetch
-//         if (fetchId === fetchIdRef.current) {
-//             const startRow = pageSize * pageIndex
-//             const endRow = startRow + pageSize
-
-//             // const fetchData = async () => {
-//             //     const response = await logService.getLogs('byDeviceId', props.deviceId);
-//             //     setDeviceLogs(response.logs);
-//             // };
-
-//             // fetchData();
-//             const xx = [...deviceLogs]
-//             setData(xx.slice(startRow, endRow))
-
-//             // Your server could send back total page count.
-//             // For now we'll just fake it, too
-//             setPageCount(Math.ceil(deviceLogs.length / pageSize))
-
-//             setLoading(false)
-//         }
-
-//     }
-
-
-
-    // const fetchData = React.useCallback(({ pageSize, pageIndex }) => {
-    //     // This will get called when the table needs new data
-
-
-    //     // Give this fetch an ID
-    //     const fetchId = ++fetchIdRef.current
-
-    //     // Set the loading state
-    //     setLoading(true)
-
-
-    //     // Only update the data if this is the latest fetch
-    //     if (fetchId === fetchIdRef.current) {
-    //         const startRow = pageSize * pageIndex
-    //         const endRow = startRow + pageSize
-
-    //         // const fetchData = async () => {
-    //         //     const response = await logService.getLogs('byDeviceId', props.deviceId);
-    //         //     setDeviceLogs(response.logs);
-    //         // };
-
-    //         // fetchData();
-    //         const xx = [...deviceLogs]
-    //         setData(xx.slice(startRow, endRow))
-
-    //         // Your server could send back total page count.
-    //         // For now we'll just fake it, too
-    //         setPageCount(Math.ceil(deviceLogs.length / pageSize))
-
-    //         setLoading(false)
-    //     }
-
-    // }, [deviceLogs])
-
-    if (!deviceLogs || deviceLogs.length === 0) return <div>nothing loaded</div>;
+    if (!deviceLogs.logs || deviceLogs.logs.length === 0) return <div>nothing loaded</div>;
 
     //   const onConfirmDelete = async (logId) => {
     //     await deviceLogs.deleteLog(logId);
@@ -156,23 +159,29 @@ const DeviceLogs = (props) => {
         </Menu>
     );
 
-    const DevicesListContent = () => (
-        // <Styles>
+    const LogsTable = () => (
         <Table
             columns={columns}
-            data={deviceLogs}
-          //  fetchData={fetchData}
+            data={deviceLogs.logs}
+            //  fetchData={fetchData}
             loading={loading}
-            pageCount={6}
+            pageSize={pageSize}
         />
-        // </Styles>
     );
 
+    const DeviceLogsContent = () =>
+        <Row gutter={[32, 32]}>
+            <Col span={12}><DeviceDetails /></Col>
+            <Col span={12}><LogsTable /></Col>
+        </Row>
+
     return (
-        <LayoutWrapper
-            menu={<DevicesListMenu />}
-            content={<DevicesListContent />}
-        />
+        <Styles>
+            <LayoutWrapper
+                menu={<DevicesListMenu />}
+                content={<DeviceLogsContent />}
+            />
+        </Styles>
     );
 };
 

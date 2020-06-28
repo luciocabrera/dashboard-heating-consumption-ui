@@ -1,4 +1,6 @@
 import { endPoints } from '../constants/endPoints';
+// Services
+import * as deviceService from './deviceService';
 import http from '../lib/http';
 
 export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
@@ -8,7 +10,7 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
       uriSufix = `findById/${fetchParamValue}`;
       break;
     case 'byDeviceId':
-      uriSufix = `deviceid/${fetchParamValue}?anchor=0&count=200&sort=date`;
+      uriSufix = `deviceId/${fetchParamValue}?anchor=0&count=200&sort=date`;
       break;
     default:
       uriSufix = '';
@@ -17,9 +19,10 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
 
   const uri = `${endPoints.logs.get}/${uriSufix}`;
   const response = await http('get', uri, {});
-  const logs = response.data;
 
-  return logs;
+  const device = await deviceService.getDevices('byId',fetchParamValue);
+
+  return { ...response.data, device: device};
 };
 
 export const createLog = async (log) => {
