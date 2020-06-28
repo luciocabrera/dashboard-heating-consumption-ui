@@ -22,6 +22,7 @@ import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as logService from '../../services/logService';
 import Table from '../../components/table/Table';
+import LineChart from '../../components/chart/LineChart/LineChart';
 
 
 const Styles = styled.div`
@@ -172,6 +173,7 @@ const DeviceLogs = (props) => {
                     </Card>
                 </Col>
             </Row>
+            <Row gutter={16}><LineChart /></Row>
         </>
     if (!deviceLogs.logs || deviceLogs.logs.length === 0) return <div>nothing loaded</div>;
 
