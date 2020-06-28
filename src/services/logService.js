@@ -20,9 +20,13 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
   const uri = `${endPoints.logs.get}/${uriSufix}`;
   const response = await http('get', uri, {});
 
-  const device = await deviceService.getDevices('byId',fetchParamValue);
+  const device = await deviceService.getDevices('byId', fetchParamValue);
 
-  return { ...response.data, device: device};
+  response.data.logs.forEach((item, index) => {
+    item.dif = index < response.data.logs.length - 1 ? item.readingB - response.data.logs[index + 1].readingB : 0;
+  });
+
+  return { ...response.data, device: device };
 };
 
 export const createLog = async (log) => {

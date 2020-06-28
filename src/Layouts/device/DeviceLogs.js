@@ -84,6 +84,10 @@ const DeviceLogs = (props) => {
                 accessor: 'readingB',
             },
             {
+                Header: 'Diff',
+                accessor: 'dif',
+            },
+            {
                 Header: 'Comment',
                 accessor: 'comment',
             }
@@ -151,7 +155,7 @@ const DeviceLogs = (props) => {
                     <Card hoverable>
                         <Statistic
                             title="Last Reading A"
-                            value={deviceLogs.logs[deviceLogs.logs.length - 1].readingA}
+                            value={deviceLogs.logs[0].readingA}
                             prefix={<ReadOutlined />}
                             valueStyle={{ color: '#3f8600' }}
                         />
@@ -161,7 +165,7 @@ const DeviceLogs = (props) => {
                     <Card hoverable>
                         <Statistic
                             title="Last Reading B"
-                            value={deviceLogs.logs[deviceLogs.logs.length - 1].readingB}
+                            value={deviceLogs.logs[0].readingB}
                             prefix={<ReadOutlined />}
                             valueStyle={{ color: '#3f8600' }}
                         />

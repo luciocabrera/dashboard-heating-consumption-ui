@@ -52,11 +52,6 @@ const Styles = styled.div`
       }
     }
   }
-
-  .pagination {
-    position: relative;
-    bottom: 40px
-  }
 `
 // Let's add a fetchData method to our Table component that will be used to fetch
 // new data when pagination state changes
