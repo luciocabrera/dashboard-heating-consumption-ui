@@ -1,14 +1,16 @@
 import React from 'react'
-//
-import useChartConfig from 'hooks/useChartConfig'
-import Box from 'components/Box'
-import SyntaxHighlighter from 'components/SyntaxHighlighter'
 import { Chart } from 'react-charts'
-let sourceCode
+
+
+const data = [
+    {
+        x: '2020-02-10',
+        y: 23
+    },
+];
+
 const LineChart = () => {
-    const { data, randomizeData } = useChartConfig({
-        series: 10
-    })
+
     const series = React.useMemo(
         () => ({
             showPoints: false
@@ -23,16 +25,9 @@ const LineChart = () => {
         []
     )
     return (
-        <>
-            <button onClick={randomizeData}>Randomize Data</button>
-            <br />
-            <br />
-            <Box>
-                <Chart data={data} series={series} axes={axes} tooltip />
-            </Box>
-            <br />
-            <SyntaxHighlighter code={sourceCode} />
-        </>
+
+        <Chart data={data} series={series} axes={axes} tooltip />
+
     )
 }
 
