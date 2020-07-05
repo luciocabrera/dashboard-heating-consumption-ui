@@ -1,4 +1,5 @@
 import { endPoints } from '../constants/endPoints';
+import moment from 'moment'
 // Services
 import * as deviceService from './deviceService';
 import http from '../lib/http';
@@ -21,12 +22,14 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
   const response = await http('get', uri, {});
 
   const device = await deviceService.getDevices('byId', fetchParamValue);
+  const chartData =[];
 
   response.data.logs.forEach((item, index) => {
     item.dif = index < response.data.logs.length - 1 ? item.readingB - response.data.logs[index + 1].readingB : 0;
+    chartData.push([moment(item.date), item.readingB]);
   });
 
-  return { ...response.data, device: device };
+  return { ...response.data, device: device, chartData: chartData };
 };
 
 export const createLog = async (log) => {

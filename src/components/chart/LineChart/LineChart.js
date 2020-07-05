@@ -2,28 +2,28 @@ import React from 'react'
 import { Chart } from 'react-charts'
 
 
-const LineChart = () => {
+const LineChart = (props) => {
+
+
+    debugger;
 
     const data = React.useMemo(
         () => [
             {
-                label: 'Series 1',
-                data: [[0, 1], [1, 2], [2, 4], [3, 2], [4, 7]]
-            },
-            {
-                label: 'Series 2',
-                data: [[0, 3], [1, 1], [2, 5], [3, 6], [4, 4]]
+                data: props.data
             }
         ],
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         []
     )
 
-    // const series = React.useMemo(
-    //     () => ({
-    //         showPoints: false
-    //     }),
-    //     []
-    // )
+    const series = React.useMemo(
+        () => ({
+            type: 'area'
+        }),
+        []
+    )
+
     const axes = React.useMemo(
         () => [
             { primary: true, type: 'time', position: 'bottom' },
@@ -33,7 +33,7 @@ const LineChart = () => {
     )
     return (
 
-        <Chart data={data} axes={axes} tooltip />
+        <Chart data={data} axes={axes} series={series} />
 
     )
 }
