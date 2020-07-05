@@ -1,6 +1,6 @@
 // React
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
 // Components
 import { RouterLink, LayoutWrapper } from '../../components';
 import { List, Avatar, Card, Menu, notification, Popconfirm, Row } from 'antd';
@@ -19,33 +19,32 @@ import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as deviceService from '../../services/deviceService';
 
-
 const Styles = styled.div`
-.ant-card,
-.ant-card-bordered,
-.ant-card-hoverable,
-.ant-col {
-  min-width: 200px !important;
-  max-width: 348px !important;
-  width: 348px !important;
-}
+  .ant-card,
+  .ant-card-bordered,
+  .ant-card-hoverable,
+  .ant-col {
+    min-width: 200px !important;
+    max-width: 348px !important;
+    width: 348px !important;
+  }
 
-.ant-card-body {
-  min-height: 134px !important;
-  max-height: 134px !important;
-}
+  .ant-card-body {
+    min-height: 134px !important;
+    max-height: 134px !important;
+  }
 
-.ant-col {
-  margin-right: 20px !important;
-}
+  .ant-col {
+    margin-right: 20px !important;
+  }
 
-.ant-layout-content {
-  padding: 30px !important;
-  margin-top: 15px !important;
-  height:  calc(100vh - 123px) !important;
-  overflow-x: auto !important;
-}
-`
+  .ant-layout-content {
+    padding: 30px !important;
+    margin-top: 15px !important;
+    height: calc(100vh - 123px) !important;
+    overflow-x: auto !important;
+  }
+`;
 
 const DevicesList = (props) => {
   const [devices, setDevices] = useState();
@@ -86,21 +85,21 @@ const DevicesList = (props) => {
   });
 
   const DevicesListMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuHome" icon={<HomeOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/">
+    <Menu theme='dark' mode='horizontal'>
+      <Menu.Item key='menuHome' icon={<HomeOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/'>
           Home
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuNew" icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/devices/create">
+      <Menu.Item key='menuNew' icon={<ControlOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/devices/create'>
           New Device
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuLogs" icon={<DatabaseOutlined />}>
+      <Menu.Item key='menuLogs' icon={<DatabaseOutlined />}>
         Logs
       </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<UserOutlined />}>
+      <Menu.Item key='menuUsers' icon={<UserOutlined />}>
         Users
       </Menu.Item>
     </Menu>
@@ -117,8 +116,8 @@ const DevicesList = (props) => {
         xl: 6,
         xxl: 3,
       }}
-      itemLayout="vertical"
-      size="large"
+      itemLayout='vertical'
+      size='large'
       dataSource={listData}
       renderItem={(item) => (
         <List.Item key={item.title}>
@@ -129,34 +128,35 @@ const DevicesList = (props) => {
                 key={`router-link-logs-devices-${item.id}`}
                 href={`/devices/${item.id}/logs`}
               >
-                <ReadOutlined key="logs" />
+                <ReadOutlined key='logs' />
               </RouterLink>,
               <RouterLink
                 key={`router-link-edit-devices-${item.id}`}
                 href={`/devices/${item.id}`}
               >
-                <EditOutlined key="edit" />
+                <EditOutlined key='edit' />
               </RouterLink>,
               <Popconfirm
                 title={`Are you sure you want to delete the selected Device ?`}
                 onConfirm={() => onConfirmDelete(item.id)}
-                okText="Yes"
-                cancelText="No"
+                okText='Yes'
+                cancelText='No'
               >
-                <DeleteOutlined key="delete" />
+                <DeleteOutlined key='delete' />
               </Popconfirm>,
             ]}
           >
             <Card.Meta
               avatar={<Avatar src={device_list_avatar} />}
-              title={<div>
-                <Row >
-                  <div style={{ color: 'darkorange' }}>{item.code}</div>
-                </Row>
-                <Row >
-                  <div style={{ color: 'darkblue' }}>{item.name}</div>
-                </Row>
-              </div>
+              title={
+                <div>
+                  <Row>
+                    <div style={{ color: 'darkorange' }}>{item.code}</div>
+                  </Row>
+                  <Row>
+                    <div style={{ color: 'darkblue' }}>{item.name}</div>
+                  </Row>
+                </div>
               }
               description={item.description}
             />

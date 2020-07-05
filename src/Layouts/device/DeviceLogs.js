@@ -1,8 +1,8 @@
 /* eslint-disable no-unused-vars */
 // React
-import React, { useEffect, useState } from "react";
-import useWindowSize from "../../hooks/useWindowSize/useWindowSize";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
+import styled from 'styled-components';
 import {
   List,
   Avatar,
@@ -13,9 +13,9 @@ import {
   Row,
   Col,
   Statistic,
-} from "antd";
+} from 'antd';
 // Components
-import { RouterLink, LayoutWrapper } from "../../components";
+import { RouterLink, LayoutWrapper } from '../../components';
 // Icons
 import {
   EditOutlined,
@@ -25,14 +25,14 @@ import {
   UserOutlined,
   HomeOutlined,
   FileOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 /// Assets
-import device_list_avatar from "../../assets/img/device_list_avatar.jpg";
+import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 
 // Services
-import * as logService from "../../services/logService";
-import Table from "../../components/table/Table";
-import LineChart from "../../components/chart/LineChart/LineChart";
+import * as logService from '../../services/logService';
+import Table from '../../components/table/Table';
+import LineChart from '../../components/chart/LineChart/LineChart';
 
 const testPadding = `8px`;
 
@@ -49,15 +49,28 @@ const Styles = styled.div`
   }
 
   .statistic-col {
-    max-width: 25% !important;
-    min-width: 25% !important;
-    width: 25% !important;
+    max-width: 33% !important;
+    min-width: 33% !important;
+    width: 33% !important;
     padding: ${testPadding} !important;
   }
 
+  .col-total-logs {
+    max-width: 33% !important;
+    min-width: 33% !important;
+    width: 33% !important;
+    padding-top: 0px !important;
+    padding-left: 8px !important;
+  }
+
+  .col-main-card {
+    padding-left: 8px !important;
+    width: 66%;
+  }
+
   .chart-sum {
-    width: 100% !important;
-    height: 300px !important;
+    width: 97% !important;
+    height: 142px !important;
   }
 `;
 
@@ -80,7 +93,7 @@ const DeviceLogs = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       // setLoading(true)
-      const response = await logService.getLogs("byDeviceId", props.deviceId);
+      const response = await logService.getLogs('byDeviceId', props.deviceId);
       setDeviceLogs(response);
       // setLoading(false)
     };
@@ -91,24 +104,24 @@ const DeviceLogs = (props) => {
   const columns = React.useMemo(
     () => [
       {
-        Header: "Date",
-        accessor: "date",
+        Header: 'Date',
+        accessor: 'date',
       },
       {
-        Header: "Reading A",
-        accessor: "readingA",
+        Header: 'Reading A',
+        accessor: 'readingA',
       },
       {
-        Header: "Reading B",
-        accessor: "readingB",
+        Header: 'Reading B',
+        accessor: 'readingB',
       },
       {
-        Header: "Diff",
-        accessor: "dif",
+        Header: 'Diff',
+        accessor: 'dif',
       },
       {
-        Header: "Comment",
-        accessor: "comment",
+        Header: 'Comment',
+        accessor: 'comment',
       },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -117,140 +130,127 @@ const DeviceLogs = (props) => {
 
   const DeviceDetails = () => (
     <>
-      <Card
-        hoverable
-        actions={[
-          <RouterLink
-            key={`router-link-logs-devices-${deviceLogs.device.id}`}
-            href={`/devices/${deviceLogs.device.id}/logs`}
-          >
-            <ReadOutlined key="logs" />
-          </RouterLink>,
-          <RouterLink
-            key={`router-link-edit-devices-${deviceLogs.device.id}`}
-            href={`/devices/${deviceLogs.device.id}`}
-          >
-            <EditOutlined key="edit" />
-          </RouterLink>,
-        ]}
-      >
-        <Card.Meta
-          avatar={<Avatar src={device_list_avatar} />}
-          title={
-            <div>
-              <Row>
-                <div style={{ color: "darkorange" }}>
-                  {deviceLogs.device.code}
-                </div>
-              </Row>
-              <Row>
-                <div style={{ color: "darkblue" }}>
-                  {deviceLogs.device.name}
-                </div>
-              </Row>
-            </div>
-          }
-          description={
-            <Row>
-              <Col>{deviceLogs.device.description}</Col>
-              <Col>
-                {" "}
-                <Statistic
-                  title="Total Logs"
-                  value={deviceLogs.totalCount}
-                  prefix={<DatabaseOutlined />}
-                  valueStyle={{ color: "#3f8600" }}
-                />
-              </Col>{" "}
-            </Row>
-          }
-        />
-      </Card>
       <Row gutter={16}>
-        <Col span={6} className="statistic-col">
+        <Col className='col-main-card'>
+          <Card
+            hoverable
+            actions={[
+              <RouterLink
+                key={`router-link-logs-devices-${deviceLogs.device.id}`}
+                href={`/devices/${deviceLogs.device.id}/logs`}
+              >
+                <ReadOutlined key='logs' />
+              </RouterLink>,
+              <RouterLink
+                key={`router-link-edit-devices-${deviceLogs.device.id}`}
+                href={`/devices/${deviceLogs.device.id}`}
+              >
+                <EditOutlined key='edit' />
+              </RouterLink>,
+            ]}
+          >
+            <Card.Meta
+              avatar={<Avatar src={device_list_avatar} />}
+              title={
+                <div>
+                  <Row>
+                    <div style={{ color: 'darkorange' }}>
+                      {deviceLogs.device.code}
+                    </div>
+                  </Row>
+                  <Row>
+                    <div style={{ color: 'darkblue' }}>
+                      {deviceLogs.device.name}
+                    </div>
+                  </Row>
+                </div>
+              }
+              description={deviceLogs.device.description}
+            />
+          </Card>
+        </Col>
+        <Col className='col-total-logs'>
           <Card hoverable>
             <Statistic
-              title="Total Logs"
+              title='Total Logs'
               value={deviceLogs.totalCount}
               prefix={<DatabaseOutlined />}
-              valueStyle={{ color: "#3f8600" }}
-            />
-          </Card>
-        </Col>
-        <Col span={6} className="statistic-col">
-          <Card hoverable>
-            <Statistic
-              title="Total Pages"
-              value={pageCount}
-              prefix={<FileOutlined />}
-              valueStyle={{ color: "#3f8600" }}
-            />
-          </Card>
-        </Col>
-        <Col span={6} className="statistic-col">
-          <Card hoverable>
-            <Statistic
-              title="Last Reading A"
-              value={deviceLogs.logs[0].readingA}
-              prefix={<ReadOutlined />}
-              valueStyle={{ color: "#3f8600" }}
-            />
-          </Card>
-        </Col>
-        <Col span={6} className="statistic-col">
-          <Card hoverable>
-            <Statistic
-              title="Last Reading B"
-              value={deviceLogs.logs[0].readingB}
-              prefix={<ReadOutlined />}
-              valueStyle={{ color: "#3f8600" }}
+              valueStyle={{ color: '#3f8600' }}
             />
           </Card>
         </Col>
       </Row>
       <Row gutter={16}>
-        <Col span={6} className="statistic-col">
+        <Col span={8} className='statistic-col'>
           <Card hoverable>
             <Statistic
-              title="Total Logs"
-              value={deviceLogs.totalCount}
-              prefix={<DatabaseOutlined />}
-              valueStyle={{ color: "#3f8600" }}
+              title='First Reading A'
+              value={deviceLogs.logs[deviceLogs.logs.length - 1].readingA}
+              prefix={<ReadOutlined />}
+              valueStyle={{ color: '#3f8600' }}
             />
           </Card>
         </Col>
-        <Col span={6} className="statistic-col">
+        <Col span={8} className='statistic-col'>
           <Card hoverable>
             <Statistic
-              title="Total Pages"
-              value={pageCount}
-              prefix={<FileOutlined />}
-              valueStyle={{ color: "#3f8600" }}
-            />
-          </Card>
-        </Col>
-        <Col span={6} className="statistic-col">
-          <Card hoverable>
-            <Statistic
-              title="Last Reading A"
+              title='Last Reading A'
               value={deviceLogs.logs[0].readingA}
               prefix={<ReadOutlined />}
-              valueStyle={{ color: "#3f8600" }}
+              valueStyle={{ color: '#3f8600' }}
             />
           </Card>
         </Col>
-        <Col span={6} className="statistic-col">
+        <Col span={8} className='statistic-col'>
           <Card hoverable>
             <Statistic
-              title="Last Reading B"
-              value={deviceLogs.logs[0].readingB}
+              title='Diff A'
+              value={
+                deviceLogs.logs[0].readingA -
+                deviceLogs.logs[deviceLogs.logs.length - 1].readingA
+              }
               prefix={<ReadOutlined />}
-              valueStyle={{ color: "#3f8600" }}
+              valueStyle={{ color: '#3f8600' }}
             />
           </Card>
         </Col>
       </Row>
-      <Row gutter={16} className="chart-sum">
+      <Row gutter={16}>
+        <Col span={8} className='statistic-col'>
+          <Card hoverable>
+            <Statistic
+              title='First Reading B'
+              value={deviceLogs.logs[deviceLogs.logs.length - 1].readingB}
+              prefix={<ReadOutlined />}
+              valueStyle={{ color: 'darkblue' }}
+            />
+          </Card>
+        </Col>
+        <Col span={8} className='statistic-col'>
+          <Card hoverable>
+            <Statistic
+              title='Last Reading B'
+              value={deviceLogs.logs[0].readingB}
+              prefix={<ReadOutlined />}
+              valueStyle={{ color: 'darkblue' }}
+            />
+          </Card>
+        </Col>
+        <Col span={8} className='statistic-col'>
+          <Card hoverable>
+            <Statistic
+              title='Diff B'
+              value={
+                deviceLogs.logs[0].readingB -
+                deviceLogs.logs[deviceLogs.logs.length - 1].readingB
+              }
+              prefix={<ReadOutlined />}
+              valueStyle={{ color: 'darkblue' }}
+            />
+          </Card>
+        </Col>
+      </Row>
+      <Row gutter={16} className='chart-sum'>
         <LineChart data={deviceLogs.chartData} />
       </Row>
     </>
@@ -269,21 +269,21 @@ const DeviceLogs = (props) => {
   //   };
 
   const DevicesListMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuHome" icon={<HomeOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/">
+    <Menu theme='dark' mode='horizontal'>
+      <Menu.Item key='menuHome' icon={<HomeOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/'>
           Home
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuNew" icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/devices/create">
+      <Menu.Item key='menuNew' icon={<ControlOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/devices/create'>
           New Device
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuLogs" icon={<DatabaseOutlined />}>
+      <Menu.Item key='menuLogs' icon={<DatabaseOutlined />}>
         Logs
       </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<UserOutlined />}>
+      <Menu.Item key='menuUsers' icon={<UserOutlined />}>
         Users
       </Menu.Item>
     </Menu>
