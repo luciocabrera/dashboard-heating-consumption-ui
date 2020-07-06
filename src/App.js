@@ -26,7 +26,7 @@ const App = () => (
           exact
           path={[`/devices/create`]}
           // eslint-disable-next-line no-restricted-globals
-          render={() => <DeviceForm mode="new" />}
+          render={() => <DeviceForm mode='new' />}
         />
         <Route
           exact
@@ -34,20 +34,33 @@ const App = () => (
           // eslint-disable-next-line no-restricted-globals
           render={() => (
             <DeviceForm
-              mode="edit"
+              mode='edit'
               deviceId={window.location.pathname
                 .toString()
                 .substr(9, window.location.pathname.toString().length - 9)}
             />
           )}
         />
-                <Route
+        <Route
           exact
           path={[`/devices/:deviceId/logs`]}
           // eslint-disable-next-line no-restricted-globals
           render={() => (
             <DeviceLogs
-              mode="edit"
+              mode='edit'
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 14)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId/logs/create`]}
+          // eslint-disable-next-line no-restricted-globals
+          render={() => (
+            <DeviceLogs
+              mode='new'
               deviceId={window.location.pathname
                 .toString()
                 .substr(9, window.location.pathname.toString().length - 14)}
