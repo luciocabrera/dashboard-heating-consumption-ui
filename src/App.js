@@ -6,10 +6,15 @@ import store from './store/store'; //Import the store
 // Router
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Layouts
-import { Home, DevicesListContainer, DeviceForm } from './Layouts/index';
+import {
+  Home,
+  DevicesListContainer,
+  DeviceForm,
+  DeviceLogs,
+  LogForm,
+} from './Layouts/index';
 // Css
 import 'antd/dist/antd.css';
-import DeviceLogs from './Layouts/device/DeviceLogs';
 
 const App = () => (
   <Provider store={store}>
@@ -25,13 +30,11 @@ const App = () => (
         <Route
           exact
           path={[`/devices/create`]}
-          // eslint-disable-next-line no-restricted-globals
           render={() => <DeviceForm mode='new' />}
         />
         <Route
           exact
           path={[`/devices/:deviceId`]}
-          // eslint-disable-next-line no-restricted-globals
           render={() => (
             <DeviceForm
               mode='edit'
@@ -44,10 +47,8 @@ const App = () => (
         <Route
           exact
           path={[`/devices/:deviceId/logs`]}
-          // eslint-disable-next-line no-restricted-globals
           render={() => (
             <DeviceLogs
-              mode='edit'
               deviceId={window.location.pathname
                 .toString()
                 .substr(9, window.location.pathname.toString().length - 14)}
@@ -57,13 +58,24 @@ const App = () => (
         <Route
           exact
           path={[`/devices/:deviceId/logs/create`]}
-          // eslint-disable-next-line no-restricted-globals
           render={() => (
-            <DeviceLogs
+            <LogForm
               mode='new'
               deviceId={window.location.pathname
                 .toString()
-                .substr(9, window.location.pathname.toString().length - 14)}
+                .substr(9, window.location.pathname.toString().length - 21)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId/logs/createrange`]}
+          render={() => (
+            <LogForm
+              mode='range'
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 21)}
             />
           )}
         />
