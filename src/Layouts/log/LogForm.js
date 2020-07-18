@@ -8,45 +8,57 @@ import { notification } from 'antd';
 // Services
 import * as logService from '../../services/logService';
 
-const formItems = [
-  {
-    name: 'date',
-    label: 'Date',
-    type: 'datePicker',
-    rules: [
-      {
-        required: true,
-        message: 'Please enter the Code!',
-      },
-      { min: 3, message: 'The Code must be of at least 3 characters' },
-      { max: 24, message: 'The Code must be of maximum 24 characters' },
-    ],
-  },
-  {
-    name: 'readingA',
-    label: 'Reading A',
-    rules: [
-      {
-        required: true,
-        message: 'Please enter the Reading A!',
-      },
-    ],
-  },
-  {
-    name: 'readingB',
-    label: 'Reading B',
-    rules: [
-      {
-        required: true,
-        message: 'Please enter the Reading B!',
-      },
-    ],
-  },
-];
-
 const LogForm = (props) => {
   const history = useHistory();
   const [log, setLog] = useState();
+
+  const formItems = [
+    {
+      name: 'date',
+      label: 'Date',
+      type: props.mode === 'range' ? 'rangePicker' : 'datePicker',
+      rules: [
+        {
+          required: true,
+        },
+      ],
+    },
+    {
+      name: 'readingA',
+      label: 'Reading A',
+      type: 'inputNumber',
+      rules: [
+        {
+          required: true,
+          type: 'number',
+          min: 0,
+          max: 9999,
+        },
+      ],
+    },
+    {
+      name: 'readingB',
+      label: 'Reading B',
+      type: 'inputNumber',
+      rules: [
+        {
+          required: true,
+          type: 'number',
+          min: 0,
+          max: 9999,
+        },
+      ],
+    },
+    {
+      name: 'comment',
+      label: 'Comment',
+      type: 'textArea',
+      rules: [
+        { min: 3, message: 'The Comment must be of at least 3 characters' },
+        { max: 128, message: 'The Comment must be of maximum 128 characters' },
+      ],
+    },
+  ];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -58,18 +70,26 @@ const LogForm = (props) => {
   }, [props.logId, props.mode]);
 
   const onConfirmSave = async (values) => {
-    if (props.mode === 'new') await onCreate(values);
+    if (props.mode === 'new' || props.mode === 'range') await onCreate(values);
     if (props.mode === 'edit') await onUpdate(values);
   };
 
   const onCreate = async (values) => {
-    const response = await logService.createDevice(values);
+    const logs = [];
+    values.deviceId = props.deviceId;
+    if (props.mode === 'range') {
+    } else {
+      values.date = values.date.toISOString();
+      logs.push(values);
+    }
+
+    const response = await logService.createLog(logs);
     if (response.status === 201) {
       notification.success({
         message: 'Entry Log created!!!',
         description: 'The Entry Log has been successfully created.',
       });
-      history.push(`/devices/${props.logId}`);
+      history.push(`/devices/${props.deviceId}/logs`);
     }
   };
 
@@ -81,12 +101,12 @@ const LogForm = (props) => {
         message: 'Entry Log modified!!!',
         description: 'The Entry Log has been successfully modified.',
       });
-      history.push(`/devices/${props.logId}`);
+      history.push(`/devices/${props.deviceId}/logs`);
     }
   };
 
   const onConfirmCancel = () => {
-    history.push(`/devices/${props.logId}`);
+    history.push(`/devices/${props.deviceId}/logs`);
   };
 
   return (
