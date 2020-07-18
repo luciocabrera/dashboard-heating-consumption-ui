@@ -276,15 +276,28 @@ const DeviceLogs = (props) => {
         </RouterLink>
       </Menu.Item>
       <Menu.Item key='menuDevices' icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-devices`} href={`/devices/${props.deviceId}`}>
-          New Device
+        <RouterLink key={`router-link-devices`} href={`/devices`}>
+          Devices
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key='menuNewLog' icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-new-log`} href={`/devices/${props.deviceId}/create`}>
-          New Log
-        </RouterLink>
-      </Menu.Item>
+      <Menu.SubMenu icon={<ControlOutlined />} title='New Log'>
+        <Menu.Item key='menuNewSingleLog' icon={<ControlOutlined />}>
+          <RouterLink
+            key={`router-link-new-log`}
+            href={`/devices/${props.deviceId}/logs/create`}
+          >
+            Single Entry
+          </RouterLink>
+        </Menu.Item>
+        <Menu.Item key='menuNewMultipleLog' icon={<ControlOutlined />}>
+          <RouterLink
+            key={`router-link-new-log`}
+            href={`/devices/${props.deviceId}/logs/create`}
+          >
+            Multiple Entries
+          </RouterLink>
+        </Menu.Item>
+      </Menu.SubMenu>
       <Menu.Item key='menuUsers' icon={<UserOutlined />}>
         Users
       </Menu.Item>
