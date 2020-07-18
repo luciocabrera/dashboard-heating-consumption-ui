@@ -8,6 +8,7 @@ import { SaveOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 const FormCreate = (props) => {
   const [form] = AntdForm.useForm();
+
   React.useEffect(() => {
     form.setFieldsValue(props.initialValues);
   }, [form, props.initialValues]);
@@ -26,23 +27,23 @@ const FormCreate = (props) => {
   };
 
   const FormMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuLogs" icon={<SaveOutlined />}>
+    <Menu theme='dark' mode='horizontal'>
+      <Menu.Item key='menuLogs' icon={<SaveOutlined />}>
         <Popconfirm
           title={`do you want to create the current ${props.entiity} ?`}
           onConfirm={onConfirmSave}
-          okText="Yes"
-          cancelText="No"
+          okText='Yes'
+          cancelText='No'
         >
           Accept
         </Popconfirm>
       </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<CloseCircleOutlined />}>
+      <Menu.Item key='menuUsers' icon={<CloseCircleOutlined />}>
         <Popconfirm
-          title="Are you sure you want to cancel?"
+          title='Are you sure you want to cancel?'
           onConfirm={onConfirmCancel}
-          okText="Yes"
-          cancelText="No"
+          okText='Yes'
+          cancelText='No'
         >
           Cancel
         </Popconfirm>
@@ -53,12 +54,7 @@ const FormCreate = (props) => {
   return (
     <LayoutWrapper
       menu={<FormMenu />}
-      content={
-        <FormBase
-          form={form}
-          formItems={props.formItems}
-        />
-      }
+      content={<FormBase form={form} formItems={props.formItems} />}
     />
   );
 };
