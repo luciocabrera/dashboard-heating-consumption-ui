@@ -75,7 +75,7 @@ const App = () => (
               mode='range'
               deviceId={window.location.pathname
                 .toString()
-                .substr(9, window.location.pathname.toString().length - 21)}
+                .substr(9, window.location.pathname.toString().length - 26)}
             />
           )}
         />

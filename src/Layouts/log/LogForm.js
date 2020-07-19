@@ -76,14 +76,37 @@ const LogForm = (props) => {
 
   const onCreate = async (values) => {
     const logs = [];
+    let payload;
+
+    debugger;
     values.deviceId = props.deviceId;
     if (props.mode === 'range') {
+
+      const numberOfDays = values.date[1].diff(values.date[0], 'days');
+      let i = 0;
+
+      do {
+        const log = {
+          deviceId: props.deviceId,
+          comment: values.comment,
+          date: values.date[0].toISOStrinng(),
+          readingA: values.readingA,
+          readingB: values.readingB,
+        };
+
+        logs.push(log);
+        values.date[0].add(1, 'days');
+        i = i + 1;
+
+      } while (i < numberOfDays);
+
+      payload = logs;
     } else {
       values.date = values.date.toISOString();
-      logs.push(values);
+      payload = values;
     }
-
-    const response = await logService.createLog(logs);
+debugger;
+    const response = await logService.createLog(payload);
     if (response.status === 201) {
       notification.success({
         message: 'Entry Log created!!!',
@@ -95,7 +118,10 @@ const LogForm = (props) => {
 
   const onUpdate = async (values) => {
     values.id = props.logId;
+    values.deviceId = props.deviceId;
+
     const response = await logService.updateLog(values);
+
     if (response.status === 200) {
       notification.success({
         message: 'Entry Log modified!!!',

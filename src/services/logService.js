@@ -1,5 +1,5 @@
 import { endPoints } from '../constants/endPoints';
-import moment from 'moment'
+import moment from 'moment';
 // Services
 import * as deviceService from './deviceService';
 import http from '../lib/http';
@@ -22,10 +22,13 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
   const response = await http('get', uri, {});
 
   const device = await deviceService.getDevices('byId', fetchParamValue);
-  const chartData =[];
+  const chartData = [];
 
   response.data.logs.forEach((item, index) => {
-    item.dif = index < response.data.logs.length - 1 ? item.readingB - response.data.logs[index + 1].readingB : 0;
+    item.dif =
+      index < response.data.logs.length - 1
+        ? item.readingB - response.data.logs[index + 1].readingB
+        : 0;
     chartData.push([moment(item.date), item.readingB]);
   });
 
@@ -33,7 +36,9 @@ export const getLogs = async (fetchType = 'all', fetchParamValue = '') => {
 };
 
 export const createLog = async (log) => {
-  const uri = `${endPoints.logs.post}`;
+  const uri = Array.isArray(log)
+    ? `${endPoints.logs.post}/insertBulk`
+    : `${endPoints.logs.post}`;
 
   const response = await http('post', uri, log);
 

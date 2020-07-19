@@ -292,7 +292,7 @@ const DeviceLogs = (props) => {
         <Menu.Item key='menuNewMultipleLog' icon={<ControlOutlined />}>
           <RouterLink
             key={`router-link-new-log`}
-            href={`/devices/${props.deviceId}/logs/create`}
+            href={`/devices/${props.deviceId}/logs/createrange`}
           >
             Multiple Entries
           </RouterLink>
