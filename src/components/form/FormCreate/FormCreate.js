@@ -27,7 +27,12 @@ const FormCreate = (props) => {
   // };
 
   const onConfirmCancel = () => {
-    props.onConfirmCancel();
+    Modal.confirm({
+      title: 'Save Entry Log',
+      icon: <ExclamationCircleOutlined />,
+      content: 'Are you sure you want to cancel?',
+      onOk: () => props.onConfirmCancel(),
+    });
   };
 
   const onConfirmSave = () => {
@@ -47,7 +52,7 @@ const FormCreate = (props) => {
 
   const FormMenu = () => (
     <Menu theme='dark' mode='horizontal'>
-      <Menu.Item key='menuLogs' icon={<SaveOutlined />} onCick={onConfirmSave}>
+      <Menu.Item key='menuLogs' icon={<SaveOutlined />} onClick={onConfirmSave}>
         {/* <Popconfirm
           title={`do you want to create the current ${props.entiity} ?`}
           onConfirm={onConfirmSave}
@@ -57,15 +62,19 @@ const FormCreate = (props) => {
         Accept
         {/* </Popconfirm> */}
       </Menu.Item>
-      <Menu.Item key='menuUsers' icon={<CloseCircleOutlined />}>
-        <Popconfirm
+      <Menu.Item
+        key='menuUsers'
+        icon={<CloseCircleOutlined />}
+        onClick={onConfirmCancel}
+      >
+        {/* <Popconfirm
           title='Are you sure you want to cancel?'
           onConfirm={onConfirmCancel}
           okText='Yes'
           cancelText='No'
-        >
-          Cancel
-        </Popconfirm>
+        > */}
+        Cancel
+        {/* </Popconfirm> */}
       </Menu.Item>
     </Menu>
   );
