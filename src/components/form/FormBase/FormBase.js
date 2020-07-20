@@ -1,6 +1,8 @@
 /* eslint-disable no-template-curly-in-string */
 // React
 import React from 'react';
+// Other
+import moment from 'moment';
 // Styles
 import styled from 'styled-components';
 // Components
@@ -13,6 +15,10 @@ const Styles = styled.div`
     padding-top: 42px;
   }
 `;
+
+const disabledDate = (current) =>
+  // Can not select days after today and today
+  current && current > moment().endOf('day');
 
 const validateMessages = {
   required: '${label} is required!',
@@ -33,9 +39,9 @@ const FormBase = (props) => {
       case 'textArea':
         return <Input.TextArea rows={4} />;
       case 'datePicker':
-        return <DatePicker showTime />;
+        return <DatePicker showTime disabledDate={disabledDate} />;
       case 'rangePicker':
-        return <RangePicker format='YYYY-MM-DD HH:mm' />;
+        return <RangePicker format='YYYY-MM-DD' disabledDate={disabledDate} />;
       case 'select':
         return (
           <Select
