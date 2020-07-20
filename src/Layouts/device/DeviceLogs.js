@@ -15,7 +15,7 @@ import {
   Statistic,
 } from 'antd';
 // Components
-import { RouterLink, LayoutWrapper } from '../../components';
+import { RouterLink, LayoutWrapper, Spin } from '../../components';
 // Icons
 import {
   EditOutlined,
@@ -256,7 +256,7 @@ const DeviceLogs = (props) => {
     </>
   );
   if (!deviceLogs.logs || deviceLogs.logs.length === 0)
-    return <div>nothing loaded</div>;
+    return <Spin tip='Loading...' />;
 
   //   const onConfirmDelete = async (logId) => {
   //     await deviceLogs.deleteLog(logId);
