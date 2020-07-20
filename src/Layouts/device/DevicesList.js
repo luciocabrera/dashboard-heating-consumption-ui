@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 // Components
-import { RouterLink, LayoutWrapper } from '../../components';
+import { Spin, RouterLink, LayoutWrapper } from '../../components';
 import { List, Avatar, Card, Menu, notification, Popconfirm, Row } from 'antd';
 // Icons
 import {
@@ -58,7 +58,7 @@ const DevicesList = (props) => {
     fetchData();
   }, []);
 
-  if (!devices || devices.length === 0) return <div>nothing loaded</div>;
+  if (!devices || devices.length === 0) return <Spin tip='Loading...' />;
 
   const onConfirmDelete = async (deviceId) => {
     await deviceService.deleteDevice(deviceId);
