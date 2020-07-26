@@ -28,11 +28,13 @@ const Styles = styled.div`
   }
 `;
 
-const antIcon = <LoadingOutlined style={{ fontSize: 48, color:'#001529' }} spin />;
+const antIcon = (
+  <LoadingOutlined style={{ fontSize: 48, color: '#001529' }} spin />
+);
 
 const Spin = () => (
   <Styles>
-    <div class='overlay'>
+    <div className='overlay'>
       <AntdSpin size='large' indicator={antIcon} tip='Loading...' />
     </div>
   </Styles>

@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
     "antd": "^4.3.0",
     "axios": "^0.19.2",
     "react": "^16.13.1",
@@ -16,9 +13,7 @@
     "react-scripts": "3.4.1",
     "react-table": "^7.2.1",
     "redux": "^4.0.5",
-    "redux-form": "^8.3.6",
-    "redux-thunk": "^2.3.0",
-    "styled-components": "^5.1.1"
+    "redux-thunk": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +35,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "styled-components": "^5.1.1"
   }
 }
