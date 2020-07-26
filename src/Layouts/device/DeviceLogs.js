@@ -123,6 +123,16 @@ const DeviceLogs = (props) => {
         Header: 'Comment',
         accessor: 'comment',
       },
+      {
+        width: 300,
+        Header: "",
+        accessor: "actions",
+        Cell: ({ cell }) => (
+          <button value={cell.row.values.name} onClick={props.handleClickGroup}>
+           delete
+          </button>
+        )
+      }
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
