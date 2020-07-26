@@ -1,65 +1,34 @@
-
+// React
 import React from 'react';
-import { useTable, usePagination } from 'react-table'
-import styled from 'styled-components'
+// Components
+import TableStyled from './TableStyled';
+// Hooks
+import { useTable, usePagination, useRowSelect } from 'react-table';
 
-const Styles = styled.div`
-  table {
-    border-spacing: 0;
-    position: relative;
+const IndeterminateCheckbox = React.forwardRef(
+  ({ indeterminate, ...rest }, ref) => {
+    const defaultRef = React.useRef();
+    const resolvedRef = ref || defaultRef;
 
-    thead {
-      tr {
-        :nth-child(1)  {
-          background: #001529;
-          color: white;    
-        }
-        :nth-child(2)  {
-          background: #001529;
-          color: white;    
-        }
-      }
-    }
+    React.useEffect(() => {
+      resolvedRef.current.indeterminate = indeterminate;
+    }, [resolvedRef, indeterminate]);
 
-    tr {
-      line-height: 11px;
-
-      :nth-child(even) {
-        background: lightgray
-      }
-
-      :nth-child(odd) {
-        background: oldlace
-      }
-
-      :last-child {
-        td {
-          border-bottom: 0;
-        }
-      }
-    }
-
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-
-      :last-child {
-        border-right: 0;
-      }
-    }
+    return (
+      <>
+        <input type='checkbox' ref={resolvedRef} {...rest} />
+      </>
+    );
   }
-`
-// Let's add a fetchData method to our Table component that will be used to fetch
-// new data when pagination state changes
-// We can also add a loading state to let our table know it's loading new data
+);
+
 const Table = ({
   columns,
   data,
   fetchData,
   loading,
   pageCount: controlledPageCount,
-  pageSize
+  pageSize,
 }) => {
   const {
     getTableProps,
@@ -88,8 +57,32 @@ const Table = ({
       // pageCount.
       pageCount: controlledPageCount,
     },
-    usePagination
-  )
+    usePagination,
+    useRowSelect,
+    (hooks) => {
+      hooks.visibleColumns.push((columns) => [
+        // Let's make a column for selection
+        {
+          id: 'selection',
+          // The header can use the table's getToggleAllRowsSelectedProps method
+          // to render a checkbox
+          Header: ({ getToggleAllRowsSelectedProps }) => (
+            <div>
+              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
+            </div>
+          ),
+          // The cell can use the individual row's getToggleRowSelectedProps method
+          // to the render a checkbox
+          Cell: ({ row }) => (
+            <div>
+              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
+            </div>
+          ),
+        },
+        ...columns,
+      ]);
+    }
+  );
 
   // Listen for changes in pagination and use the state to fetch our new data
   // React.useEffect(() => {
@@ -98,79 +91,81 @@ const Table = ({
 
   // Render the UI for your table
   return (
-    <Styles>
-      <>
-        <table {...getTableProps()}>
-          <thead>
-            {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
-                {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()}>
-                    {column.render('Header')}
-                    <span>
-                      {column.isSorted
-                        ? column.isSortedDesc
-                          ? ' 🔽'
-                          : ' 🔼'
-                        : ''}
-                    </span>
-                  </th>
-                ))}
+    // <Styles>
+    <>
+      <TableStyled {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>
+                  {column.render('Header')}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? ' 🔽'
+                        : ' 🔼'
+                      : ''}
+                  </span>
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {page.map((row, i) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                  );
+                })}
               </tr>
-            ))}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-            {page.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()}>
-                  {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
-        </table>
-        {/* 
+            );
+          })}
+        </tbody>
+      </TableStyled>
+      {/* 
           Pagination can be built however you'd like. 
           This is just a very basic UI implementation:
         */}
-        <div className="pagination">
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
-            {'<<'}
-          </button>{' '}
-          <button onClick={previousPage} disabled={!canPreviousPage}>
-            {'<'}
-          </button>{' '}
-          <button onClick={nextPage} disabled={!canNextPage}>
-            {'next >'}
-          </button>{' '}
-          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
-            {'>>'}
-          </button>{' '}
-          <span>
-            Page{' '}
-            <strong>
-              {pageIndex + 1} of {pageOptions.length}
-            </strong>{' '}
-          </span>
-          <span>
-            | Go to page:{' '}
-            <input
-              type="number"
-              defaultValue={pageIndex + 1}
-              onChange={e => {
-                const page = e.target.value ? Number(e.target.value) - 1 : 0
-                gotoPage(page)
-              }}
-              style={{ width: '100px' }}
-            />
-          </span>{' '}
-        </div>
-      </>
-    </Styles>
-  )
-}
+      <div className='pagination'>
+        <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button onClick={previousPage} disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button onClick={nextPage} disabled={!canNextPage}>
+          {'next >'}
+        </button>{' '}
+        <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <strong>
+            {pageIndex + 1} of {pageOptions.length}
+          </strong>{' '}
+        </span>
+        <span>
+          | Go to page:{' '}
+          <input
+            type='number'
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: '100px' }}
+          />
+        </span>{' '}
+      </div>
+    </>
+    // </Styles>
+  );
+};
 
 export default Table;
