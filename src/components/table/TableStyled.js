@@ -19,6 +19,7 @@ const TableStyled = styled.table`
     tr {
       line-height: 11px;
       max-height: 27px;
+      height: 27px;
 
       :nth-child(even) {
         background: lightgray !important;   
@@ -38,7 +39,11 @@ const TableStyled = styled.table`
     th,
     td {
       margin: 0;
-      padding: 0.5rem;
+      padding: 0.2rem;
+      text-overflow: ellipsis;
+
+      white-space: nowrap;
+      overflow: hidden;
 
       :last-child {
         border-right: 0;

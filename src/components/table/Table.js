@@ -44,8 +44,9 @@ const Table = ({
     gotoPage,
     nextPage,
     previousPage,
+    selectedFlatRows,
     // Get the state from the instance
-    state: { pageIndex },
+    state: { pageIndex, selectedRowIds },
   } = useTable(
     {
       columns,
@@ -163,8 +164,21 @@ const Table = ({
           />
         </span>{' '}
       </div>
+      <pre>
+        <code>
+          {JSON.stringify(
+            {
+              selectedRowIds: selectedRowIds,
+              'selectedFlatRows[].original': selectedFlatRows.map(
+                d => d.original
+              ),
+            },
+            null,
+            2
+          )}
+        </code>
+      </pre>
     </>
-    // </Styles>
   );
 };
 
