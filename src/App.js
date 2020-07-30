@@ -29,13 +29,8 @@ const App = () => (
         />
         <Route
           exact
-          path={[`/devices/create`]}
-          render={() => <DeviceForm mode='new' />}
-        />
-        <Route
-          exact
-          path={[`/devices/:deviceId`]}
-          render={() => <DeviceForm mode='edit' />}
+          path={[`/devices/create`, `/devices/:deviceId`]}
+          render={() => <DeviceForm />}
         />
         <Route
           exact
