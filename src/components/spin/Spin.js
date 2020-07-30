@@ -1,43 +1,18 @@
 // React
 import React from 'react';
-// Styles
-import styled from 'styled-components';
 // Components
-import { Spin as AntdSpin } from 'antd';
+import { Spin as AntSpin } from 'antd';
+import SpinStyled from './SpinStyled';
 // Icons
 import { LoadingOutlined } from '@ant-design/icons';
 
-const Styles = styled.div`
-  .ant-spin {
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    left: calc(50vw - 25px);
-    top: calc(50vh - 25px);
-    color: #001529;
-  }
+const antIcon = <LoadingOutlined className='icon-indicator' spin />;
 
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-  }
-`;
-
-const antIcon = (
-  <LoadingOutlined style={{ fontSize: 48, color: '#001529' }} spin />
-);
-
-const Spin = () => (
-  <Styles>
-    <div className='overlay'>
-      <AntdSpin size='large' indicator={antIcon} tip='Loading...' />
-    </div>
-  </Styles>
-);
+const Spin = (props) =>
+  props.isBusy === true && (
+    <SpinStyled className='overlay'>
+      <AntSpin size='large' indicator={antIcon} tip='Loading...' />
+    </SpinStyled>
+  );
 
 export default Spin;

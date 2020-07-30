@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 // React
 import React, { useEffect, useState } from 'react';
+// Router
+import { withRouter } from 'react-router-dom';
 import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
 import styled from 'styled-components';
 import {
@@ -16,6 +18,9 @@ import {
 } from 'antd';
 // Components
 import { RouterLink, LayoutWrapper, Spin } from '../../components';
+import Table from '../../components/table/Table';
+import LineChart from '../../components/chart/LineChart/LineChart';
+
 // Icons
 import {
   EditOutlined,
@@ -31,8 +36,6 @@ import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 
 // Services
 import * as logService from '../../services/logService';
-import Table from '../../components/table/Table';
-import LineChart from '../../components/chart/LineChart/LineChart';
 
 const testPadding = `8px`;
 
@@ -86,20 +89,24 @@ const DeviceLogs = (props) => {
       : 1;
   // We'll start our table without any data
   //  const [data, setData] = React.useState([])
-  const [loading, setLoading] = React.useState(false);
+  const [isBusy, setIsBusy] = React.useState(false);
   // const [pageCount, setPageCount] = React.useState(0)
   // const fetchIdRef = React.useRef(0)
 
   useEffect(() => {
     const fetchData = async () => {
-      // setLoading(true)
-      const response = await logService.getLogs('byDeviceId', props.deviceId);
+      setIsBusy(true);
+      const response = await logService.getLogs(
+        'byDeviceId',
+        props.match.params.deviceId
+      );
       setDeviceLogs(response);
-      // setLoading(false)
+      setIsBusy(false);
     };
 
     fetchData();
-  }, [props.deviceId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const columns = React.useMemo(
     () => [
@@ -125,14 +132,14 @@ const DeviceLogs = (props) => {
       },
       {
         width: 300,
-        Header: "",
-        accessor: "actions",
+        Header: '',
+        accessor: 'actions',
         Cell: ({ cell }) => (
           <button value={cell.row.values.name} onClick={props.handleClickGroup}>
-           delete
+            delete
           </button>
-        )
-      }
+        ),
+      },
     ],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
@@ -146,14 +153,8 @@ const DeviceLogs = (props) => {
             hoverable
             actions={[
               <RouterLink
-                key={`router-link-logs-devices-${deviceLogs.device.id}`}
-                href={`/devices/${deviceLogs.device.id}/logs`}
-              >
-                <ReadOutlined key='logs' />
-              </RouterLink>,
-              <RouterLink
-                key={`router-link-edit-devices-${deviceLogs.device.id}`}
-                href={`/devices/${deviceLogs.device.id}`}
+                key={`router-link-edit-devices-${props.match.params.deviceId}`}
+                href={`/devices/${props.match.params.deviceId}`}
               >
                 <EditOutlined key='edit' />
               </RouterLink>,
@@ -266,7 +267,7 @@ const DeviceLogs = (props) => {
     </>
   );
   if (!deviceLogs.logs || deviceLogs.logs.length === 0)
-    return <Spin tip='Loading...' />;
+    return <Spin isBusy={true} />;
 
   //   const onConfirmDelete = async (logId) => {
   //     await deviceLogs.deleteLog(logId);
@@ -319,7 +320,7 @@ const DeviceLogs = (props) => {
       columns={columns}
       data={deviceLogs.logs}
       //  fetchData={fetchData}
-      loading={loading}
+      loading={isBusy}
       pageSize={pageSize}
     />
   );
@@ -337,6 +338,7 @@ const DeviceLogs = (props) => {
 
   return (
     <Styles>
+      <Spin isBusy={isBusy} />
       <LayoutWrapper
         menu={<DevicesListMenu />}
         content={<DeviceLogsContent />}
@@ -345,4 +347,4 @@ const DeviceLogs = (props) => {
   );
 };
 
-export default DeviceLogs;
+export default withRouter(DeviceLogs);

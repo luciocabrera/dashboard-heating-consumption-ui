@@ -92,7 +92,6 @@ const Table = ({
 
   // Render the UI for your table
   return (
-    // <Styles>
     <>
       <TableStyled {...getTableProps()}>
         <thead>
@@ -128,10 +127,6 @@ const Table = ({
           })}
         </tbody>
       </TableStyled>
-      {/* 
-          Pagination can be built however you'd like. 
-          This is just a very basic UI implementation:
-        */}
       <div className='pagination'>
         <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
           {'<<'}

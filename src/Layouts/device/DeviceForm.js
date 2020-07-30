@@ -1,9 +1,9 @@
 // React
 import React, { useState, useEffect } from 'react';
 // Router
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 // Components
-import { FormCreate } from '../../components/index';
+import { FormCreate, Spin } from '../../components/index';
 import { notification } from 'antd';
 // Services
 import * as deviceService from '../../services/deviceService';
@@ -47,15 +47,22 @@ const formItems = [
 const DeviceForm = (props) => {
   const history = useHistory();
   const [device, setDevice] = useState();
+  const [isBusy, setIsBusy] = React.useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const device = await deviceService.getDevices('byId', props.deviceId);
+      setIsBusy(true);
+      const device = await deviceService.getDevices(
+        'byId',
+        props.match.params.deviceId
+      );
       setDevice(device);
+      setIsBusy(false);
     };
 
     if (props.mode === 'edit') fetchData();
-  }, [props.deviceId, props.mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onConfirmSave = async (values) => {
     if (props.mode === 'new') await onCreate(values);
@@ -74,7 +81,7 @@ const DeviceForm = (props) => {
   };
 
   const onUpdate = async (values) => {
-    values.id = props.deviceId;
+    values.id = props.match.params.deviceId;
     const response = await deviceService.updateDevice(values);
     if (response.status === 200) {
       notification.success({
@@ -90,14 +97,17 @@ const DeviceForm = (props) => {
   };
 
   return (
-    <FormCreate
-      formItems={formItems}
-      onConfirmCancel={onConfirmCancel}
-      onConfirmSave={onConfirmSave}
-      entity='Device'
-      initialValues={device}
-    />
+    <>
+      <Spin {...isBusy} />
+      <FormCreate
+        formItems={formItems}
+        onConfirmCancel={onConfirmCancel}
+        onConfirmSave={onConfirmSave}
+        entity='Device'
+        initialValues={device}
+      />
+    </>
   );
 };
 
-export default DeviceForm;
+export default withRouter(DeviceForm);

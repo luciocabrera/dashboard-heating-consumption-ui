@@ -1,7 +1,7 @@
 // React
 import React, { useState, useEffect } from 'react';
 // Router
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 // Components
 import { FormCreate } from '../../components/index';
 import { notification } from 'antd';
@@ -62,12 +62,13 @@ const LogForm = (props) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const log = await logService.getLogs('byId', props.logId);
+      const log = await logService.getLogs('byId', props.match.params.logId);
       setLog(log);
     };
 
     if (props.mode === 'edit') fetchData();
-  }, [props.logId, props.mode]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const onConfirmSave = async (values) => {
     if (props.mode === 'new' || props.mode === 'range') await onCreate(values);
@@ -78,14 +79,14 @@ const LogForm = (props) => {
     const logs = [];
     let payload;
 
-    values.deviceId = props.deviceId;
+    values.deviceId = props.match.params.deviceId;
     if (props.mode === 'range') {
       const numberOfDays = values.date[1].diff(values.date[0], 'days');
       let i = 0;
 
       do {
         const log = {
-          deviceId: props.deviceId,
+          deviceId: props.match.params.deviceId,
           comment: values.comment,
           date: values.date[0].toISOString(),
           readingA: values.readingA,
@@ -109,13 +110,13 @@ const LogForm = (props) => {
         message: 'Entry Log created!!!',
         description: 'The Entry Log has been successfully created.',
       });
-      history.push(`/devices/${props.deviceId}/logs`);
+      history.push(`/devices/${props.match.params.deviceId}/logs`);
     }
   };
 
   const onUpdate = async (values) => {
     values.id = props.logId;
-    values.deviceId = props.deviceId;
+    values.deviceId = props.match.params.deviceId;
 
     const response = await logService.updateLog(values);
 
@@ -124,12 +125,12 @@ const LogForm = (props) => {
         message: 'Entry Log modified!!!',
         description: 'The Entry Log has been successfully modified.',
       });
-      history.push(`/devices/${props.deviceId}/logs`);
+      history.push(`/devices/${props.match.params.deviceId}/logs`);
     }
   };
 
   const onConfirmCancel = () => {
-    history.push(`/devices/${props.deviceId}/logs`);
+    history.push(`/devices/${props.match.params.deviceId}/logs`);
   };
 
   return (
@@ -143,4 +144,4 @@ const LogForm = (props) => {
   );
 };
 
-export default LogForm;
+export default withRouter(LogForm);
