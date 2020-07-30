@@ -1,3 +1,40 @@
+
+:root {
+  --main-bg-color: brown;
+  /* ***********Colors********** */
+  --er-blue: #5197D6;
+  --er-accent: #FA5400;
+  --er-success: #48BD1F;
+  --er-error: #FE0000;
+  --er-warn: rgb(238, 180, 80);
+  --er-teal: #007a87;
+  /* ***********Hover State Colors********** */
+  --er-hover-blue: #7CB1E0;
+  /* *******grey-scale******* */
+  --er-white: #ffffff;
+  --er-black: #111;
+  --er-grey-1: #f7f7f7;
+  --er-grey-2: #ECECEC;
+  --er-grey-3: #E5E5E5;
+  --er-grey-4: #C7C7C7;
+  --er-grey-5: #B2B2B4;
+  --er-grey-6: #8B8C8C;
+  --er-grey-7: #6D6D6D;
+  /* *******z-index********* */
+  --z-index-layer-1: 1;
+  --z-index-layer-2: 2;
+  --z-index-layer-3: 3;
+  --z-index-layer-4: 4;
+  --z-index-layer-5: 5;
+  --z-index-layer-6: 6;
+  --z-index-layer-7: 7;
+  --z-index-layer-8: 8;
+  --z-index-layer-9: 9;
+  --z-index-layer-10: 10;
+  --highest-order-z-index: 2000;
+  --max-z-index: 20001;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -13,22 +50,19 @@ code {
 }
 
 .ant-layout-content {
-  padding: 30px !important;
-  margin-top: 15px !important;
+  height:  calc(100vh - 72px) !important;
+  overflow-x: auto !important;
 }
 
 .ant-layout-footer {
+  padding: 0 !important;
   background: #001529 !important;
   color: white !important;
-  height: 14px !important;
+  height: 36px !important;
+  line-height: 36px !important;
 }
 
-.footer-title {
-  position: relative !important;
-  top: -10px !important;
-}
-
-.ant-card,
+/* .ant-card,
 .ant-card-bordered,
 .ant-card-hoverable,
 .ant-col {
@@ -36,22 +70,27 @@ code {
   max-width: 348px !important;
   width: 348px !important;
 }
-.ant-card-body {
-  min-height: 118px !important;
-  max-height: 118px !important;
-}
 
+.ant-card-body {
+  min-height: 134px !important;
+  max-height: 134px !important;
+}
 
 .ant-col {
   margin-right: 20px !important;
-}
+} */
 
 .header-logo {
-  height: 120px;
+  height: 36px;
   object-fit: none;
 }
 
-.ant-layout-content {
+/* .ant-layout-content {
   overflow-y: auto !important;
   height: 650px ;
+} */
+
+.ant-layout-header {
+  height: 36px !important;
+  line-height: 36px !important;
 }

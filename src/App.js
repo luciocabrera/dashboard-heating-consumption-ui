@@ -6,7 +6,13 @@ import store from './store/store'; //Import the store
 // Router
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Layouts
-import { Home, DevicesListContainer, DeviceForm } from './Layouts/index';
+import {
+  Home,
+  DevicesListContainer,
+  DeviceForm,
+  DeviceLogs,
+  LogForm,
+} from './Layouts/index';
 // Css
 import 'antd/dist/antd.css';
 
@@ -24,19 +30,52 @@ const App = () => (
         <Route
           exact
           path={[`/devices/create`]}
-          // eslint-disable-next-line no-restricted-globals
-          render={() => <DeviceForm mode="new" />}
+          render={() => <DeviceForm mode='new' />}
         />
         <Route
           exact
           path={[`/devices/:deviceId`]}
-          // eslint-disable-next-line no-restricted-globals
           render={() => (
             <DeviceForm
-              mode="edit"
+              mode='edit'
               deviceId={window.location.pathname
                 .toString()
                 .substr(9, window.location.pathname.toString().length - 9)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId/logs`]}
+          render={() => (
+            <DeviceLogs
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 14)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId/logs/create`]}
+          render={() => (
+            <LogForm
+              mode='new'
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 21)}
+            />
+          )}
+        />
+        <Route
+          exact
+          path={[`/devices/:deviceId/logs/createrange`]}
+          render={() => (
+            <LogForm
+              mode='range'
+              deviceId={window.location.pathname
+                .toString()
+                .substr(9, window.location.pathname.toString().length - 26)}
             />
           )}
         />

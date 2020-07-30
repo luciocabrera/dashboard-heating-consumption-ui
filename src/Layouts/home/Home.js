@@ -10,21 +10,20 @@ import {
   UserOutlined,
 } from '@ant-design/icons';
 
-
 const Home = (props) => {
   props.getDevices();
 
   const HomeMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuDevices" icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/devices">
+    <Menu theme='dark' mode='horizontal'>
+      <Menu.Item key='menuDevices' icon={<ControlOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/devices'>
           Devices
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuLogs" icon={<DatabaseOutlined />}>
+      <Menu.Item key='menuLogs' icon={<DatabaseOutlined />}>
         Logs
       </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<UserOutlined />}>
+      <Menu.Item key='menuUsers' icon={<UserOutlined />}>
         Users
       </Menu.Item>
     </Menu>

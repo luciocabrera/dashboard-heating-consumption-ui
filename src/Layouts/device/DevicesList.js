@@ -1,8 +1,9 @@
 // React
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 // Components
-import { RouterLink, LayoutWrapper } from '../../components';
-import { List, Avatar, Card, Menu, notification, Popconfirm, Row, Col } from 'antd';
+import { Spin, RouterLink, LayoutWrapper } from '../../components';
+import { List, Avatar, Card, Menu, notification, Popconfirm, Row } from 'antd';
 // Icons
 import {
   EditOutlined,
@@ -17,7 +18,48 @@ import {
 import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
 // Services
 import * as deviceService from '../../services/deviceService';
-import Text from 'antd/lib/typography/Text';
+
+const Styles = styled.div`
+  .ant-card,
+  .ant-card-bordered {
+    min-width: 200px !important;
+    max-width: 348px !important;
+    width: 348px !important;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .ant-card-hoverable:hover {
+    cursor: pointer;
+    transition: transform 0.2s;
+    will-change: transform;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+      0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09) !important;
+  }
+
+  .ant-card-actions {
+    border-radius: 15px;
+  }
+
+  .ant-card-body {
+    min-height: 134px !important;
+    max-height: 134px !important;
+  }
+
+  .ant-col {
+    min-width: 200px !important;
+    max-width: 348px !important;
+    width: 348px !important;
+    margin-right: 20px !important;
+  }
+
+  .ant-layout-content {
+    padding: 30px !important;
+    margin-top: 15px !important;
+    height: calc(100vh - 123px) !important;
+    overflow-x: auto !important;
+  }
+`;
 
 const DevicesList = (props) => {
   const [devices, setDevices] = useState();
@@ -31,7 +73,7 @@ const DevicesList = (props) => {
     fetchData();
   }, []);
 
-  if (!devices || devices.length === 0) return <div>nothing loaded</div>;
+  if (!devices || devices.length === 0) return <Spin tip='Loading...' />;
 
   const onConfirmDelete = async (deviceId) => {
     await deviceService.deleteDevice(deviceId);
@@ -58,21 +100,21 @@ const DevicesList = (props) => {
   });
 
   const DevicesListMenu = () => (
-    <Menu theme="dark" mode="horizontal">
-      <Menu.Item key="menuHome" icon={<HomeOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/">
+    <Menu theme='dark' mode='horizontal'>
+      <Menu.Item key='menuHome' icon={<HomeOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/'>
           Home
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuNew" icon={<ControlOutlined />}>
-        <RouterLink key={`router-link-devices`} href="/devices/create">
+      <Menu.Item key='menuNew' icon={<ControlOutlined />}>
+        <RouterLink key={`router-link-devices`} href='/devices/create'>
           New Device
         </RouterLink>
       </Menu.Item>
-      <Menu.Item key="menuLogs" icon={<DatabaseOutlined />}>
+      <Menu.Item key='menuLogs' icon={<DatabaseOutlined />}>
         Logs
       </Menu.Item>
-      <Menu.Item key="menuUsers" icon={<UserOutlined />}>
+      <Menu.Item key='menuUsers' icon={<UserOutlined />}>
         Users
       </Menu.Item>
     </Menu>
@@ -89,41 +131,47 @@ const DevicesList = (props) => {
         xl: 6,
         xxl: 3,
       }}
-      itemLayout="vertical"
-      size="large"
+      itemLayout='vertical'
+      size='large'
       dataSource={listData}
       renderItem={(item) => (
         <List.Item key={item.title}>
           <Card
             hoverable
             actions={[
-              <ReadOutlined key="logs" />,
+              <RouterLink
+                key={`router-link-logs-devices-${item.id}`}
+                href={`/devices/${item.id}/logs`}
+              >
+                <ReadOutlined key='logs' />
+              </RouterLink>,
               <RouterLink
                 key={`router-link-edit-devices-${item.id}`}
                 href={`/devices/${item.id}`}
               >
-                <EditOutlined key="edit" />
+                <EditOutlined key='edit' />
               </RouterLink>,
               <Popconfirm
                 title={`Are you sure you want to delete the selected Device ?`}
                 onConfirm={() => onConfirmDelete(item.id)}
-                okText="Yes"
-                cancelText="No"
+                okText='Yes'
+                cancelText='No'
               >
-                <DeleteOutlined key="delete" />
+                <DeleteOutlined key='delete' />
               </Popconfirm>,
             ]}
           >
             <Card.Meta
               avatar={<Avatar src={device_list_avatar} />}
-              title={<div>
-                <Row >
-                  <div style={{ color: 'darkorange' }}>{item.code}</div>
-                </Row>
-                <Row >
-                  <div style={{ color: 'darkblue' }}>{item.name}</div>
-                </Row>
-              </div>
+              title={
+                <div>
+                  <Row>
+                    <div style={{ color: 'darkorange' }}>{item.code}</div>
+                  </Row>
+                  <Row>
+                    <div style={{ color: 'darkblue' }}>{item.name}</div>
+                  </Row>
+                </div>
               }
               description={item.description}
             />
@@ -134,10 +182,12 @@ const DevicesList = (props) => {
   );
 
   return (
-    <LayoutWrapper
-      menu={<DevicesListMenu />}
-      content={<DevicesListContent />}
-    />
+    <Styles>
+      <LayoutWrapper
+        menu={<DevicesListMenu />}
+        content={<DevicesListContent />}
+      />
+    </Styles>
   );
 };
 

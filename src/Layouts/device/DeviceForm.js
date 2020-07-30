@@ -94,7 +94,7 @@ const DeviceForm = (props) => {
       formItems={formItems}
       onConfirmCancel={onConfirmCancel}
       onConfirmSave={onConfirmSave}
-      entity="Device"
+      entity='Device'
       initialValues={device}
     />
   );

@@ -4,7 +4,7 @@ import { getDevices, createDevice } from '../../actions/devices';
 
 const mapDispatchToProps = {
   getDevices,
-  createDevice
+  createDevice,
 };
 
 const mapStateToProps = (state) => {
