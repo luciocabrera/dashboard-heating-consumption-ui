@@ -10,10 +10,8 @@ import { Form as AntdForm, Input, Select, InputNumber, DatePicker } from 'antd';
 
 const { RangePicker } = DatePicker;
 
-const Styles = styled.div`
-  form {
-    padding-top: 42px;
-  }
+const Styles = styled.form`
+  padding-top: 42px;
 `;
 
 const disabledDate = (current) =>
