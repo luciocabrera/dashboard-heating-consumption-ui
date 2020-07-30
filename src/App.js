@@ -35,49 +35,22 @@ const App = () => (
         <Route
           exact
           path={[`/devices/:deviceId`]}
-          render={() => (
-            <DeviceForm
-              mode='edit'
-              deviceId={window.location.pathname
-                .toString()
-                .substr(9, window.location.pathname.toString().length - 9)}
-            />
-          )}
+          render={() => <DeviceForm mode='edit' />}
         />
         <Route
           exact
           path={[`/devices/:deviceId/logs`]}
-          render={() => (
-            <DeviceLogs
-              deviceId={window.location.pathname
-                .toString()
-                .substr(9, window.location.pathname.toString().length - 14)}
-            />
-          )}
+          render={() => <DeviceLogs />}
         />
         <Route
           exact
           path={[`/devices/:deviceId/logs/create`]}
-          render={() => (
-            <LogForm
-              mode='new'
-              deviceId={window.location.pathname
-                .toString()
-                .substr(9, window.location.pathname.toString().length - 21)}
-            />
-          )}
+          render={() => <LogForm mode='new' />}
         />
         <Route
           exact
           path={[`/devices/:deviceId/logs/createrange`]}
-          render={() => (
-            <LogForm
-              mode='range'
-              deviceId={window.location.pathname
-                .toString()
-                .substr(9, window.location.pathname.toString().length - 26)}
-            />
-          )}
+          render={() => <LogForm mode='range' />}
         />
       </Switch>
     </BrowserRouter>
