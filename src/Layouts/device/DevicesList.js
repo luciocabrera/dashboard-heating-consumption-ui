@@ -21,12 +21,24 @@ import * as deviceService from '../../services/deviceService';
 
 const Styles = styled.div`
   .ant-card,
-  .ant-card-bordered,
-  .ant-card-hoverable,
-  .ant-col {
+  .ant-card-bordered {
     min-width: 200px !important;
     max-width: 348px !important;
     width: 348px !important;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  }
+
+  .ant-card-hoverable:hover {
+    cursor: pointer;
+    transition: transform 0.2s;
+    will-change: transform;
+    box-shadow: 0 1px 2px -2px rgba(0, 0, 0, 0.16),
+      0 3px 6px 0 rgba(0, 0, 0, 0.12), 0 5px 12px 4px rgba(0, 0, 0, 0.09) !important;
+  }
+
+  .ant-card-actions {
+    border-radius: 15px;
   }
 
   .ant-card-body {
@@ -35,6 +47,9 @@ const Styles = styled.div`
   }
 
   .ant-col {
+    min-width: 200px !important;
+    max-width: 348px !important;
+    width: 348px !important;
     margin-right: 20px !important;
   }
 
