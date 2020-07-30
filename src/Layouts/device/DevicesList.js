@@ -30,6 +30,7 @@ const Styles = styled.div`
   }
 
   .ant-card-hoverable:hover {
+    transform: scale(1.057);
     cursor: pointer;
     transition: transform 0.2s;
     will-change: transform;
