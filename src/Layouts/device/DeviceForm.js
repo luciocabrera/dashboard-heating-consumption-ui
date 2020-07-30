@@ -47,6 +47,7 @@ const formItems = [
 const DeviceForm = (props) => {
   const history = useHistory();
   const [device, setDevice] = useState();
+  const [existDevice, setExistDevice] = React.useState(false);
   const [isBusy, setIsBusy] = React.useState(false);
 
   useEffect(() => {
@@ -57,16 +58,20 @@ const DeviceForm = (props) => {
         props.match.params.deviceId
       );
       setDevice(device);
+      setExistDevice(true);
       setIsBusy(false);
     };
 
-    if (props.mode === 'edit') fetchData();
+    if (props.match.params.deviceId) fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onConfirmSave = async (values) => {
-    if (props.mode === 'new') await onCreate(values);
-    if (props.mode === 'edit') await onUpdate(values);
+    if (existDevice === true) {
+      await onUpdate(values);
+    } else {
+      await onCreate(values);
+    }
   };
 
   const onCreate = async (values) => {
