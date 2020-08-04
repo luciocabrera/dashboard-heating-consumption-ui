@@ -1,26 +1,14 @@
-/* eslint-disable no-unused-vars */
 // React
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
+// Component Styles wrapper
+import DeviceLogsStyled from './DeviceLogsStyled';
 // Router
 import { withRouter } from 'react-router-dom';
-import useWindowSize from '../../hooks/useWindowSize/useWindowSize';
-import styled from 'styled-components';
-import {
-  List,
-  Avatar,
-  Card,
-  Menu,
-  notification,
-  Popconfirm,
-  Row,
-  Col,
-  Statistic,
-} from 'antd';
+import useWindowSize from '../../../hooks/useWindowSize/useWindowSize';
+import { Avatar, Card, Menu, Row, Col, Statistic } from 'antd';
 // Components
-import { RouterLink, LayoutWrapper, Spin } from '../../components';
-import Table from '../../components/table/Table';
-import LineChart from '../../components/chart/LineChart/LineChart';
-
+import { RouterLink, LayoutWrapper, Spin,LineChart } from '../../../components';
+import Table from '../../../components/table/Table';
 // Icons
 import {
   EditOutlined,
@@ -29,53 +17,11 @@ import {
   DatabaseOutlined,
   UserOutlined,
   HomeOutlined,
-  FileOutlined,
 } from '@ant-design/icons';
 /// Assets
-import device_list_avatar from '../../assets/img/device_list_avatar.jpg';
-
+import device_list_avatar from '../../../assets/img/device_list_avatar.jpg';
 // Services
-import * as logService from '../../services/logService';
-
-const testPadding = `8px`;
-
-const Styles = styled.div`
-  .ant-row {
-    flex-flow: nowrap;
-    margin: 0px !important;
-  }
-
-  .ant-col-12 {
-    max-width: 50% !important;
-    width: 50% !important;
-    overflow: hidden;
-  }
-
-  .statistic-col {
-    max-width: 33% !important;
-    min-width: 33% !important;
-    width: 33% !important;
-    padding: ${testPadding} !important;
-  }
-
-  .col-total-logs {
-    max-width: 33% !important;
-    min-width: 33% !important;
-    width: 33% !important;
-    padding-top: 0px !important;
-    padding-left: 8px !important;
-  }
-
-  .col-main-card {
-    padding-left: 8px !important;
-    width: 66%;
-  }
-
-  .chart-sum {
-    width: 97% !important;
-    height: 142px !important;
-  }
-`;
+import * as logService from '../../../services/logService';
 
 const DeviceLogs = (props) => {
   const size = useWindowSize();
@@ -83,13 +29,13 @@ const DeviceLogs = (props) => {
   const pageSize = Math.round((size.height - 218) / 27);
 
   const [deviceLogs, setDeviceLogs] = useState([]);
-  const pageCount =
-    deviceLogs.logs && deviceLogs.logs.length > 0
-      ? Math.round(deviceLogs.logs.length / pageSize)
-      : 1;
+  // const pageCount =
+  //   deviceLogs.logs && deviceLogs.logs.length > 0
+  //     ? Math.round(deviceLogs.logs.length / pageSize)
+  //     : 1;
   // We'll start our table without any data
   //  const [data, setData] = React.useState([])
-  const [isBusy, setIsBusy] = React.useState(false);
+  const [isBusy, setIsBusy] = useState(false);
   // const [pageCount, setPageCount] = React.useState(0)
   // const fetchIdRef = React.useRef(0)
 
@@ -108,7 +54,7 @@ const DeviceLogs = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const columns = React.useMemo(
+  const columns = useMemo(
     () => [
       {
         Header: 'Date',
@@ -337,13 +283,13 @@ const DeviceLogs = (props) => {
   );
 
   return (
-    <Styles>
+    <DeviceLogsStyled>
       <Spin isBusy={isBusy} />
       <LayoutWrapper
         menu={<DevicesListMenu />}
         content={<DeviceLogsContent />}
       />
-    </Styles>
+    </DeviceLogsStyled>
   );
 };
 

@@ -11,8 +11,6 @@ import {
 } from '@ant-design/icons';
 
 const Home = (props) => {
-  props.getDevices();
-
   const HomeMenu = () => (
     <Menu theme='dark' mode='horizontal'>
       <Menu.Item key='menuDevices' icon={<ControlOutlined />}>

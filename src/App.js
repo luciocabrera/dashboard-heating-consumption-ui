@@ -8,11 +8,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 // Layouts
 import {
   Home,
-  DevicesListContainer,
+  DevicesList,
   DeviceForm,
   DeviceLogs,
   LogForm,
-} from './Layouts/index';
+} from './features/index';
 // Css
 import 'antd/dist/antd.css';
 
@@ -25,7 +25,7 @@ const App = () => (
         <Route
           exact
           path={[`/devices`]}
-          render={() => <DevicesListContainer />}
+          render={() => <DevicesList />}
         />
         <Route
           exact

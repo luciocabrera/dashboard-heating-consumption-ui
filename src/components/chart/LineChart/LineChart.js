@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Chart } from 'react-charts';
 
 const LineChart = (props) => {
-  const data = React.useMemo(
+  const data = useMemo(
     () => [
       {
         data: props.data,
@@ -12,14 +12,14 @@ const LineChart = (props) => {
     []
   );
 
-  const series = React.useMemo(
+  const series = useMemo(
     () => ({
       type: 'area',
     }),
     []
   );
 
-  const axes = React.useMemo(
+  const axes = useMemo(
     () => [
       { primary: true, type: 'time', position: 'bottom' },
       { type: 'linear', position: 'left' },
