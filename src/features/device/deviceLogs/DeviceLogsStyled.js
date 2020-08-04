@@ -36,6 +36,16 @@ const DevicesLogsStyled = styled.div`
     width: 97% !important;
     height: 142px !important;
   }
+
+  .patterns-content {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0.6
+  }
 `;
 
 export default DevicesLogsStyled;

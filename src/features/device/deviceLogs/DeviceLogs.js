@@ -7,7 +7,12 @@ import { withRouter } from 'react-router-dom';
 import useWindowSize from '../../../hooks/useWindowSize/useWindowSize';
 import { Avatar, Card, Menu, Row, Col, Statistic } from 'antd';
 // Components
-import { RouterLink, LayoutWrapper, Spin,LineChart } from '../../../components';
+import {
+  RouterLink,
+  LayoutWrapper,
+  Spin,
+  LineChart,
+} from '../../../components';
 import Table from '../../../components/table/Table';
 // Icons
 import {
@@ -22,6 +27,13 @@ import {
 import device_list_avatar from '../../../assets/img/device_list_avatar.jpg';
 // Services
 import * as logService from '../../../services/logService';
+// import StatisticCard from '../../../components/statistic/StatisticCard';
+// import sta from '../../../components/statistic/sta.svg';
+// import styled from 'styled-components';
+
+// const Wrap = styled.div`
+//   background-image: url(${sta});
+// `;
 
 const DeviceLogs = (props) => {
   const size = useWindowSize();
@@ -174,14 +186,29 @@ const DeviceLogs = (props) => {
       </Row>
       <Row gutter={16}>
         <Col span={8} className='statistic-col'>
-          <Card hoverable>
-            <Statistic
-              title='First Reading B'
-              value={deviceLogs.logs[deviceLogs.logs.length - 1].readingB}
-              prefix={<ReadOutlined />}
-              valueStyle={{ color: 'darkblue' }}
-            />
-          </Card>
+          <div
+            style={{ position: 'relative' }}
+          >
+            <svg
+              viewBox='0 0 500 150'
+              preserveAspectRatio='none'
+              className='patterns-content'
+              style={{ height: '70px', width: '100%' }}
+            >
+              <path
+                d='M0.00,92.27 C216.83,192.92 304.30,8.39 500.00,109.03 L500.00,0.00 L0.00,0.00 Z'
+                style={{ stroke: 'none', fill: '#e1efe3' }}
+              ></path>
+            </svg>
+            <Card hoverable>
+              <Statistic
+                title='First Reading B'
+                value={deviceLogs.logs[deviceLogs.logs.length - 1].readingB}
+                prefix={<ReadOutlined />}
+                valueStyle={{ color: 'darkblue' }}
+              />
+            </Card>
+          </div>
         </Col>
         <Col span={8} className='statistic-col'>
           <Card hoverable>
