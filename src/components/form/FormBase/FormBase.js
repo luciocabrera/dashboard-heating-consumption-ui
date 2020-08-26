@@ -3,16 +3,12 @@
 import React from 'react';
 // Other
 import moment from 'moment';
-// Styles
-import styled from 'styled-components';
+// Component Styles wrapper
+import FormBaseStyled from './FormBaseStyled';
 // Components
 import { Form as AntdForm, Input, Select, InputNumber, DatePicker } from 'antd';
 
 const { RangePicker } = DatePicker;
-
-const Styles = styled.form`
-  padding-top: 42px;
-`;
 
 const disabledDate = (current) =>
   // Can not select days after today and today
@@ -74,22 +70,20 @@ const FormBase = (props) => {
     ));
 
   return (
-    <Styles>
-      <AntdForm
-        form={props.form}
-        validateMessages={validateMessages}
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout='horizontal'
-        scrollToFirstError
-      >
-        <FormItems />
-      </AntdForm>
-    </Styles>
+    <FormBaseStyled
+      form={props.form}
+      validateMessages={validateMessages}
+      labelCol={{
+        span: 4,
+      }}
+      wrapperCol={{
+        span: 14,
+      }}
+      layout='horizontal'
+      scrollToFirstError
+    >
+      <FormItems />
+    </FormBaseStyled>
   );
 };
 

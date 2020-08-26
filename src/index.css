@@ -62,18 +62,42 @@ code {
   line-height: 36px !important;
 }
 
-
 .header-logo {
   height: 36px;
   object-fit: none;
 }
 
-/* .ant-layout-content {
-  overflow-y: auto !important;
-  height: 650px ;
-} */
-
 .ant-layout-header {
   height: 36px !important;
   line-height: 36px !important;
 }
+
+.ant-card,
+.ant-card-bordered {
+
+  border-radius: 15px !important;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+}
+
+.ant-card-actions {
+  border-radius: 15px !important;
+}
+
+/* .ant-card-body {
+  min-height: 134px !important;
+  max-height: 134px !important;
+}
+
+.ant-col {
+  min-width: 200px !important;
+  max-width: 348px !important;
+  width: 348px !important;
+  margin-right: 20px !important;
+} */
+
+/* .ant-layout-content {
+  padding: 30px !important;
+  margin-top: 15px !important;
+  height: calc(100vh - 123px) !important;
+  overflow-x: auto !important;
+} */

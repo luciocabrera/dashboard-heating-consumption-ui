@@ -1,5 +1,5 @@
 // React
-import React from 'react';
+import React, { useEffect } from 'react';
 // Components
 import { LayoutWrapper, FormBase } from '../../index';
 import { Menu, Form as AntdForm, Modal } from 'antd';
@@ -13,7 +13,7 @@ import {
 const FormCreate = (props) => {
   const [form] = AntdForm.useForm();
 
-  React.useEffect(() => {
+  useEffect(() => {
     form.setFieldsValue(props.initialValues);
   }, [form, props.initialValues]);
 

@@ -1,16 +1,16 @@
 // React
-import React from 'react';
-// Components
+import React, { useEffect, forwardRef, useRef } from 'react';
+// Component Styles wrapper
 import TableStyled from './TableStyled';
 // Hooks
 import { useTable, usePagination, useRowSelect } from 'react-table';
 
-const IndeterminateCheckbox = React.forwardRef(
+const IndeterminateCheckbox = forwardRef(
   ({ indeterminate, ...rest }, ref) => {
-    const defaultRef = React.useRef();
+    const defaultRef = useRef();
     const resolvedRef = ref || defaultRef;
 
-    React.useEffect(() => {
+    useEffect(() => {
       resolvedRef.current.indeterminate = indeterminate;
     }, [resolvedRef, indeterminate]);
 

@@ -3,10 +3,10 @@ import React, { useState, useEffect } from 'react';
 // Router
 import { useHistory, withRouter } from 'react-router-dom';
 // Components
-import { FormCreate, Spin } from '../../components/index';
+import { FormCreate, Spin } from '../../../components/index';
 import { notification } from 'antd';
 // Services
-import * as deviceService from '../../services/deviceService';
+import * as deviceService from '../../../services/deviceService';
 
 const formItems = [
   {
