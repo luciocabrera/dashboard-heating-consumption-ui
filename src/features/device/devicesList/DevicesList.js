@@ -90,8 +90,6 @@ const DevicesList = (props) => {
         xl: 6,
         xxl: 3,
       }}
-      itemLayout='vertical'
-      size='large'
       dataSource={listData}
       renderItem={(item) => (
         <List.Item key={item.title}>
