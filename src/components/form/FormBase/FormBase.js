@@ -4,7 +4,7 @@ import React from 'react';
 // Other
 import moment from 'moment';
 // Component Styles wrapper
-import FormBaseStyled from './FormBaseStyled';
+import { FormBaseStyled } from './styles';
 // Components
 import { Form as AntdForm, Input, Select, InputNumber, DatePicker } from 'antd';
 
@@ -70,19 +70,21 @@ const FormBase = (props) => {
     ));
 
   return (
-    <FormBaseStyled
-      form={props.form}
-      validateMessages={validateMessages}
-      labelCol={{
-        span: 4,
-      }}
-      wrapperCol={{
-        span: 14,
-      }}
-      layout='horizontal'
-      scrollToFirstError
-    >
-      <FormItems />
+    <FormBaseStyled>
+      <AntdForm
+        form={props.form}
+        validateMessages={validateMessages}
+        labelCol={{
+          span: 4,
+        }}
+        wrapperCol={{
+          span: 14,
+        }}
+        layout='horizontal'
+        scrollToFirstError
+      >
+        <FormItems />
+      </AntdForm>
     </FormBaseStyled>
   );
 };
